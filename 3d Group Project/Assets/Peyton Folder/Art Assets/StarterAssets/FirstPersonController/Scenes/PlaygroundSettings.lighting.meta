@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: f52c5a2492fb61542abdcefdf0e574bd
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4890085278179872738
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 196525
+  packageName: Starter Assets - FirstPerson | Updates in new CharacterController
+    package
+  packageVersion: 1.3
+  assetPath: Assets/StarterAssets/FirstPersonController/Scenes/PlaygroundSettings.lighting
+  uploadId: 691166
