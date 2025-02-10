@@ -466,7 +466,6 @@ GameObject:
   m_Component:
   - component: {fileID: 409656172}
   - component: {fileID: 409656175}
-  - component: {fileID: 409656174}
   - component: {fileID: 409656173}
   m_Layer: 0
   m_Name: pickUpCamera
@@ -534,14 +533,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!81 &409656174
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 409656171}
-  m_Enabled: 1
 --- !u!20 &409656175
 Camera:
   m_ObjectHideFlags: 0
@@ -893,7 +884,7 @@ Transform:
   m_GameObject: {fileID: 1774823429}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2.08}
+  m_LocalPosition: {x: 0, y: 0, z: 1.68}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

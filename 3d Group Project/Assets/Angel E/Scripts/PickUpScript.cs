@@ -15,7 +15,6 @@ public class PickUpScript : MonoBehaviour
     private bool canDrop = true; //this is needed so we don't throw/drop object when rotating the object
     private int LayerNumber; //layer index
     private bool isRotating = false;
-
     //Reference to script which includes mouse movement of player (looking around)
     //we want to disable the player looking around when rotating the object
     //example below 
@@ -99,19 +98,11 @@ public class PickUpScript : MonoBehaviour
         {
             isRotating = true;
             canDrop = false; // Prevent dropping while rotating
-
-            // Lock the cursor to prevent camera movement
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
         }
         else if (Input.GetKeyUp(KeyCode.R)) // Stop rotating
         {
             isRotating = false;
             canDrop = true;
-
-            // Unlock cursor when not rotating
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
         }
 
         if (isRotating)
