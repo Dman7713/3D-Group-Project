@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PickUpScript : MonoBehaviour
 {
@@ -15,7 +16,6 @@ public class PickUpScript : MonoBehaviour
     private bool canDrop = true; //this is needed so we don't throw/drop object when rotating the object
     private int LayerNumber; //layer index
     private bool isRotating = false;
-
     //Reference to script which includes mouse movement of player (looking around)
     //we want to disable the player looking around when rotating the object
     //example below 
@@ -28,7 +28,7 @@ public class PickUpScript : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E)) //change E to whichever key you want to press to pick up
+        if (Input.GetKeyDown(KeyCode.Mouse0)) //change E to whichever key you want to press to pick up
         {
             if (heldObj == null) //if currently not holding anything
             {
@@ -44,25 +44,24 @@ public class PickUpScript : MonoBehaviour
                     }
                 }
             }
-            else
-            {
-                if (canDrop == true)
-                {
-                    StopClipping(); //prevents object from clipping through walls
-                    DropObject();
-                }
-            }
+            
+            
         }
         if (heldObj != null) //if player is holding object
         {
             MoveObject(); //keep object position at holdPos
             RotateObject();
-            if (Input.GetKeyDown(KeyCode.Mouse0) && canDrop == true) //Mous0 (leftclick) is used to throw, change this if you want another button to be used)
+            if (Input.GetKeyDown(KeyCode.Mouse1) && canDrop == true) //Mous0 (leftclick) is used to throw, change this if you want another button to be used)
             {
                 StopClipping();
                 ThrowObject();
             }
 
+        }
+        if (Input.GetKeyUp(KeyCode.Mouse0) && canDrop == true)
+        {
+            StopClipping(); //prevents object from clipping through walls
+            DropObject();
         }
     }
     void PickUpObject(GameObject pickUpObj)
@@ -71,7 +70,7 @@ public class PickUpScript : MonoBehaviour
         {
             heldObj = pickUpObj; //assign heldObj to the object that was hit by the raycast (no longer == null)
             heldObjRb = pickUpObj.GetComponent<Rigidbody>(); //assign Rigidbody
-            heldObjRb.isKinematic = true;
+            //heldObjRb.isKinematic = true;
             heldObjRb.transform.parent = holdPos.transform; //parent object to holdposition
             heldObj.layer = LayerNumber; //change the object layer to the holdLayer
             //make sure object doesnt collide with player, it can cause weird bugs
@@ -82,8 +81,10 @@ public class PickUpScript : MonoBehaviour
     {
         //re-enable collision with player
         Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
+        heldObjRb.angularVelocity = Vector3.zero;
+        heldObjRb.linearVelocity = Vector3.zero;
         heldObj.layer = 0; //object assigned back to default layer
-        heldObjRb.isKinematic = false;
+        //heldObjRb.isKinematic = false;
         heldObj.transform.parent = null; //unparent object
         heldObj = null; //undefine game object
     }
@@ -99,19 +100,11 @@ public class PickUpScript : MonoBehaviour
         {
             isRotating = true;
             canDrop = false; // Prevent dropping while rotating
-
-            // Lock the cursor to prevent camera movement
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
         }
         else if (Input.GetKeyUp(KeyCode.R)) // Stop rotating
         {
             isRotating = false;
             canDrop = true;
-
-            // Unlock cursor when not rotating
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
         }
 
         if (isRotating)
@@ -130,7 +123,9 @@ public class PickUpScript : MonoBehaviour
         //same as drop function, but add force to object before undefining it
         Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
         heldObj.layer = 0;
-        heldObjRb.isKinematic = false;
+        heldObjRb.angularVelocity = Vector3.zero;
+        heldObjRb.linearVelocity = Vector3.zero;
+        //heldObjRb.isKinematic = false;
         heldObj.transform.parent = null;
         heldObjRb.AddForce(transform.forward * throwForce);
         heldObj = null;

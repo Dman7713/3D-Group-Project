@@ -29,13 +29,13 @@ public class ObjectPickup : MonoBehaviour
         if (Input.GetKey(KeyCode.R) && heldObject != null) // Hold R to rotate
         {
             isRotating = true;
-            cameraController?.DisableCamera(); // Stop camera movement
+            cameraController.DisableCamera(); // Stop camera movement
             RotateObject();
         }
         else if (Input.GetKeyUp(KeyCode.R)) // Release R to stop rotating
         {
             isRotating = false;
-            cameraController?.EnableCamera(); // Re-enable camera movement
+            cameraController.EnableCamera(); // Re-enable camera movement
         }
     }
 
@@ -78,7 +78,10 @@ public class ObjectPickup : MonoBehaviour
 
     void RotateObject()
     {
-        float rotationInput = Input.GetAxis("Mouse X") * rotationSpeed;
-        heldObject.transform.Rotate(Vector3.forward, -rotationInput);
+        if (isRotating == true)
+        {
+            float rotationInput = Input.GetAxis("Mouse X") * rotationSpeed;
+            heldObject.transform.Rotate(Vector3.forward, -rotationInput);    
+        }
     }
 }
