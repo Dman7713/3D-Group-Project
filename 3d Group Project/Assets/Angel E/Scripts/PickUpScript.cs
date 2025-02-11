@@ -75,6 +75,11 @@ public class PickUpScript : MonoBehaviour
             heldObj.layer = LayerNumber; //change the object layer to the holdLayer
             //make sure object doesnt collide with player, it can cause weird bugs
             Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), true);
+
+
+            heldObjRb.freezeRotation = true;
+
+
         }
     }
     void DropObject()
@@ -87,6 +92,8 @@ public class PickUpScript : MonoBehaviour
         //heldObjRb.isKinematic = false;
         heldObj.transform.parent = null; //unparent object
         heldObj = null; //undefine game object
+
+        heldObjRb.freezeRotation = false;
     }
     void MoveObject()
     {
@@ -98,11 +105,13 @@ public class PickUpScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R)) // Start rotating
         {
+            heldObjRb.freezeRotation = false;
             isRotating = true;
             canDrop = false; // Prevent dropping while rotating
         }
         else if (Input.GetKeyUp(KeyCode.R)) // Stop rotating
         {
+            heldObjRb.freezeRotation = true;
             isRotating = false;
             canDrop = true;
         }
@@ -125,6 +134,7 @@ public class PickUpScript : MonoBehaviour
         heldObj.layer = 0;
         heldObjRb.angularVelocity = Vector3.zero;
         heldObjRb.linearVelocity = Vector3.zero;
+        heldObjRb.freezeRotation = false;
         //heldObjRb.isKinematic = false;
         heldObj.transform.parent = null;
         heldObjRb.AddForce(transform.forward * throwForce);
