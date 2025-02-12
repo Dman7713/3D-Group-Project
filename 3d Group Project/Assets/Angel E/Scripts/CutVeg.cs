@@ -3,8 +3,6 @@ using UnityEngine;
 public class CutVeg : MonoBehaviour
 {
     [SerializeField]
-    GameObject rawV;
-    [SerializeField]
     GameObject cutV;
     Vector3 spawnPos;
     [SerializeField]
@@ -35,13 +33,13 @@ public class CutVeg : MonoBehaviour
         if (collision.collider.name == "Knife")
         {
             cutCount -= 1;
-            rawV.transform.localScale -= scaleDecrease;
+            transform.localScale -= scaleDecrease;
             if (cutCount >= 0)
             {
                 if (spawnCount <= 1)
                 {
                     Instantiate(cutV, spawnPos, spawnRot);
-                    Destroy(rawV);
+                    Destroy(gameObject);
                 }
                 else
                 {
