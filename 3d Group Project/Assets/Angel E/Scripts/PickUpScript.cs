@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PickUpScript : MonoBehaviour
 {
+    public Camera mainCamera;
     public GameObject player;
     public Transform holdPos;
     //if you copy from below this point, you are legally required to like the video
@@ -23,7 +24,6 @@ public class PickUpScript : MonoBehaviour
     void Start()
     {
         LayerNumber = LayerMask.NameToLayer("holdLayer"); //if your holdLayer is named differently make sure to change this ""
-
         //mouseLookScript = player.GetComponent<MouseLookScript>();
     }
     void Update()
@@ -68,8 +68,13 @@ public class PickUpScript : MonoBehaviour
     {
         if (pickUpObj.GetComponent<Rigidbody>()) //make sure the object has a RigidBody
         {
+            
             heldObj = pickUpObj; //assign heldObj to the object that was hit by the raycast (no longer == null)
             heldObjRb = pickUpObj.GetComponent<Rigidbody>(); //assign Rigidbody
+            if (heldObj.name == "Knife")
+            {
+                heldObj.transform.forward = -mainCamera.transform.forward;
+            }
             //heldObjRb.isKinematic = true;
             heldObjRb.transform.parent = holdPos.transform; //parent object to holdposition
             heldObj.layer = LayerNumber; //change the object layer to the holdLayer
