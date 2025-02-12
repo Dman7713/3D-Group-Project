@@ -3,8 +3,6 @@ using UnityEngine;
 public class CutVeg : MonoBehaviour
 {
     [SerializeField]
-    GameObject rawV;
-    [SerializeField]
     GameObject cutV;
     Vector3 spawnPos;
     [SerializeField]
@@ -12,6 +10,12 @@ public class CutVeg : MonoBehaviour
     Quaternion spawnRot;
     [SerializeField]
     Vector3 spawnScale;
+    [SerializeField]
+    int spawnCount = 1;
+    [SerializeField]
+    int cutCount = 1;
+    [SerializeField]
+    Vector3 scaleDecrease;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,16 +32,23 @@ public class CutVeg : MonoBehaviour
     {
         if (collision.collider.name == "Knife")
         {
-            SpawnVeg();
-            Destroy(rawV);
-        }
-    }
+            cutCount -= 1;
+            transform.localScale -= scaleDecrease;
+            if (cutCount >= 0)
+            {
+                if (spawnCount <= 1)
+                {
+                    Instantiate(cutV, spawnPos, spawnRot);
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    Instantiate(cutV, spawnPos + spawnDiff, spawnRot);
+                    spawnCount -= 1;
+                }
+            }
 
-    private void SpawnVeg()
-    {
-        Instantiate(cutV, spawnPos, spawnRot);
-        Instantiate(cutV, spawnPos + spawnDiff, spawnRot);
-        Instantiate(cutV, spawnPos + spawnDiff, spawnRot);
-        Instantiate(cutV, spawnPos + spawnDiff, spawnRot);
+            
+        }
     }
 }
