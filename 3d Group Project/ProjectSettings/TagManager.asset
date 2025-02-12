@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CinemachineTarget
   - canPickUp
+  - Stovetop
   layers:
   - Default
   - TransparentFX
