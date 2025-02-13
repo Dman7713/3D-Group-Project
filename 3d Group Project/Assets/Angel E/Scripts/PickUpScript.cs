@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PickUpScript : MonoBehaviour
 {
     public Camera mainCamera;
+    public GameObject KnifeThing;
     public GameObject player;
     public Transform holdPos;
     //if you copy from below this point, you are legally required to like the video
@@ -73,7 +74,7 @@ public class PickUpScript : MonoBehaviour
             heldObjRb = pickUpObj.GetComponent<Rigidbody>(); //assign Rigidbody
             if (heldObj.name == "Knife")
             {
-                heldObj.transform.forward = -mainCamera.transform.forward;
+                heldObj.transform.forward = -KnifeThing.transform.forward;
             }
             //heldObjRb.isKinematic = true;
             heldObjRb.transform.parent = holdPos.transform; //parent object to holdposition
