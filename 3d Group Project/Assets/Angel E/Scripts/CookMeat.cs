@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class CookMeat : MonoBehaviour
 {
+    /// <summary>
+    /// [SerializeField]
+    /// </summary>
+    ///AudioSource sounds;
     [SerializeField]
     GameObject cookedM;
     [SerializeField]
@@ -13,7 +17,7 @@ public class CookMeat : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        cookedM.transform.localScale = spawnScale;
+        ///cookedM.transform.localScale = spawnScale;
     }
 
     // Update is called once per frame
@@ -23,17 +27,36 @@ public class CookMeat : MonoBehaviour
         spawnRot = transform.rotation;
     }
 
-    private void OnCollisionStay(Collision collision)
+
+    private void OnTriggerStay(Collider other)
     {
-        if (collision.collider.tag == "Stovetop")
+        if (other.tag == "Stovetop")
         {
             cookTime -= Time.deltaTime;
             Debug.Log(cookTime);
-            if (cookTime <= 0)
+            if (cookTime == 0 || cookTime < 0)
             {
+                ///sounds.mute = true;
                 Instantiate(cookedM, spawnPos, spawnRot);
+                cookedM.transform.localScale = spawnScale;
                 Destroy(gameObject);
             }
+
         }
     }
+    /*
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Stovetop")
+        {
+            sounds.Play();
+            sounds.mute = false;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+            sounds.mute = true;
+    }
+    */
 }
