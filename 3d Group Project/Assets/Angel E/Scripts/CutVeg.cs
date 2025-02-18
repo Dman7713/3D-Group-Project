@@ -20,6 +20,7 @@ public class CutVeg : MonoBehaviour
     void Start()
     {
         cutV.transform.localScale = spawnScale;
+        spawnRot = Quaternion.identity;
     }
 
     // Update is called once per frame
