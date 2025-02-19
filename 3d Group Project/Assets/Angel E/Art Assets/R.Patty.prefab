@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cookedM: {fileID: 5543512732864917865, guid: 1250536d0b7459a48832c1d871ce8f87, type: 3}
-  spawnScale: {x: 22, y: 22, z: 22}
+  spawnScale: {x: 16.68856, y: 16.68856, z: 16.68856}
   cookTime: 5
 --- !u!82 &1240353010598605165
 AudioSource:
