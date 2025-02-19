@@ -25,6 +25,16 @@ public class PlatingObjects : MonoBehaviour
             {
                 // set its parent to the scripted object
                 collision.transform.SetParent(transform);
+                ///grab collided objects rigidbody (if it has one)
+                Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
+                ///if it has  one
+                if (rb != null)
+                {
+                    ///cut all velocity
+                    rb.angularVelocity = Vector3.zero;
+                    rb.linearVelocity = Vector3.zero;
+                    rb.freezeRotation = true;
+                }
                 //if the object's name is not plate and the scripted object has a parent
                 if (gameObject.name != "Plate" && transform.parent.name == "Plate" && transform.parent != null)
                 {
