@@ -36,7 +36,7 @@ public class PlatingObjects : MonoBehaviour
                     rb.freezeRotation = true;
                 }
                 //if the object's name is not plate and the scripted object has a parent
-                if (gameObject.name != "Plate" && transform.parent.name == "Plate" && transform.parent != null)
+                if (gameObject.name != "Plate" && transform.parent.name == "Plate" && transform.parent != null && transform.parent.parent !=null)
                 {
                     // set the scripted object's child to be the child of the scripted object's parent
                     collision.transform.SetParent(transform.parent);
