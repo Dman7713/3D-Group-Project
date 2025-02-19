@@ -17,7 +17,7 @@ public class ObjectScriptTurnOn : MonoBehaviour
         {
             GetComponent<PlatingObjects>().enabled = true;
         }
-        if (transform.parent != null)
+        if (transform.parent == null)
         {
             GetComponent<PlatingObjects>().enabled = false;
         }
