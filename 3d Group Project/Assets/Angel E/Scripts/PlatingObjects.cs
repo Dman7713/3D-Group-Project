@@ -35,8 +35,12 @@ public class PlatingObjects : MonoBehaviour
                     rb.linearVelocity = Vector3.zero;
                     rb.freezeRotation = true;
                 }
-                //if the object's name is not plate and the scripted object has a parent
-                if (gameObject.name != "Plate" && transform.parent.name == "Plate" && transform.parent != null && transform.parent.parent !=null)
+                if (rb != null && transform.name != "Plate")
+                {
+                    rb.isKinematic = true;
+                }
+                //if the object's name is not plate and the scripted object has a parent named plate,
+                if (gameObject.name != "Plate" && transform.parent.name == "Plate" && transform.parent != null)
                 {
                     // set the scripted object's child to be the child of the scripted object's parent
                     collision.transform.SetParent(transform.parent);

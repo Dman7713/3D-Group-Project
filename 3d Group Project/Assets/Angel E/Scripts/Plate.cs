@@ -1,11 +1,13 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Plate : MonoBehaviour
 {
-    private List<GameObject> stackedIngredients = new List<GameObject>();  // List of all stacked objects
-    private Transform topIngredient; // Tracks the last placed ingredient
-    private float stackHeight = 0.1f; // Height spacing between objects
+    private Vector3 originalWorldScale; 
+    private List<GameObject> stackedIngredients = new List<GameObject>(); // List of all stacked objects
+    private Transform topIngredient; // The last stacked ingredient
+    private float stackHeight = 0.1f; // Adjust this for better spacing
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -17,7 +19,8 @@ public class Plate : MonoBehaviour
 
     private void AttachToPlate(GameObject ingredient)
     {
-        // Disable Rigidbody to prevent physics from interfering
+        originalWorldScale = ingredient.transform.lossyScale;
+        // Remove Rigidbody to prevent unwanted physics interactions
         Rigidbody rb = ingredient.GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -26,19 +29,32 @@ public class Plate : MonoBehaviour
             rb.angularVelocity = Vector3.zero;
         }
 
-        // Set parent to the plate
+        // Set parent to plate
         ingredient.transform.SetParent(transform);
 
-        // Determine correct stacking position
-        Vector3 newPosition = topIngredient != null
-            ? topIngredient.position + new Vector3(0, stackHeight, 0)  // Stack on top of last ingredient
-            : transform.position + new Vector3(0, stackHeight, 0);  // First ingredient on plate
+        // Correctly position the ingredient based on the top object
+        Vector3 newPosition = (topIngredient != null)
+            ? topIngredient.position + new Vector3(0, GetObjectHeight(topIngredient) / 2 + GetObjectHeight(ingredient.transform) / 2, 0) // Stacking logic
+            : transform.position + new Vector3(0, GetObjectHeight(ingredient.transform) / 2, 0); // First ingredient on plate
 
         ingredient.transform.position = newPosition;
-        ingredient.transform.rotation = Quaternion.identity; // Keep upright orientation
 
-        // Update tracking variables
+        // Rotate the object -90 degrees before attaching it
+        ingredient.transform.rotation = Quaternion.Euler(-90, 0, 0);
+
+        // Update stack tracking
         stackedIngredients.Add(ingredient);
         topIngredient = ingredient.transform;
+        ingredient.transform.localScale = new Vector3(originalWorldScale.x / transform.lossyScale.x, originalWorldScale.y / transform.lossyScale.y, originalWorldScale.z / transform.lossyScale.z);
+    }
+
+    private float GetObjectHeight(Transform obj)
+    {
+        Collider collider = obj.GetComponent<Collider>();
+        if (collider != null)
+        {
+            return collider.bounds.size.y; // Get the actual height of the object
+        }
+        return stackHeight; // Default fallback height
     }
 }
