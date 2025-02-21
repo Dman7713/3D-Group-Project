@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6963497577515771364}
   - component: {fileID: 8215854042831555439}
   - component: {fileID: 6727342647764802063}
+  - component: {fileID: 910297777242424298}
   m_Layer: 9
   m_Name: C.Tomato
   m_TagString: Pickup
@@ -152,3 +153,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lerpSpeed: 10
+--- !u!65 &910297777242424298
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4702839685255490909}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.00952186, y: 0.0072927047, z: 0.0036223046}
+  m_Center: {x: -0.000036807938, y: -0.0003058811, z: -0.00009094246}
