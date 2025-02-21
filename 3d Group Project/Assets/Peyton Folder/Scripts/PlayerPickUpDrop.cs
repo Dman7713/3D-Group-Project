@@ -3,8 +3,9 @@ using UnityEngine;
 public class PlayerPickAndDrop : MonoBehaviour
 {
     [SerializeField] private Transform playerCameraTransform;
-    [SerializeField] private Transform objectGrabPointTransform;
+    [SerializeField] private Transform objectGrabPointTransform; // Grab point is the target drop point
     [SerializeField] private LayerMask pickUpLayerMask;
+    [SerializeField] private LayerMask obstacleLayerMask; // Detects obstacles like walls
 
     private GrabObject grabbedObject;
 
@@ -28,8 +29,26 @@ public class PlayerPickAndDrop : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0) && grabbedObject != null) // Release left mouse button to drop
         {
-            grabbedObject.Drop();
-            grabbedObject = null;
+            DropItem();
         }
+    }
+
+    private void DropItem()
+    {
+        // Cast a ray from the camera towards the grab point to check for obstacles
+        RaycastHit hit;
+        Vector3 directionToDropPoint = objectGrabPointTransform.position - playerCameraTransform.position;
+        if (Physics.Raycast(playerCameraTransform.position, directionToDropPoint, out hit, directionToDropPoint.magnitude, obstacleLayerMask))
+        {
+            // Drop at the hit point if the raycast hits an obstacle (like a wall)
+            grabbedObject.Drop(hit.point);
+        }
+        else
+        {
+            // Otherwise, drop at the grab point (if no obstacles in the way)
+            grabbedObject.Drop(objectGrabPointTransform.position);
+        }
+
+        grabbedObject = null;
     }
 }
