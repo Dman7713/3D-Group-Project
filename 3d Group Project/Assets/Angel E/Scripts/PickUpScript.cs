@@ -97,6 +97,7 @@ public class PickUpScript : MonoBehaviour
         heldObj.layer = 0; //object assigned back to default layer
         //heldObjRb.isKinematic = false;
         heldObj.transform.parent = null; //unparent object
+        heldObj.transform.position = holdPos.transform.position;
         heldObj = null; //undefine game object
 
         heldObjRb.freezeRotation = false;
@@ -143,6 +144,7 @@ public class PickUpScript : MonoBehaviour
         heldObjRb.freezeRotation = false;
         //heldObjRb.isKinematic = false;
         heldObj.transform.parent = null;
+        heldObj.transform.position = holdPos.transform.position;
         heldObjRb.AddForce(transform.forward * throwForce);
         heldObj = null;
     }

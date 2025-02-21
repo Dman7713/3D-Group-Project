@@ -13,13 +13,14 @@ public class ObjectScriptTurnOn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.parent.name == "Plate")
+        if (transform.parent.name == "Plate" || transform.parent.tag == "Ingredients")
         {
             GetComponent<PlatingObjects>().enabled = true;
         }
         if (transform.parent == null)
         {
             GetComponent<PlatingObjects>().enabled = false;
+            GetComponent<Rigidbody>().isKinematic = false;
         }
     }
 }
