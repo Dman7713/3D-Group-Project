@@ -14,12 +14,10 @@ GameObject:
   - component: {fileID: 6129634225137087371}
   - component: {fileID: 5320872008602193149}
   - component: {fileID: 4890950028532176383}
-  - component: {fileID: 5565880394251500932}
-  - component: {fileID: 8331694149483449097}
-  - component: {fileID: 3414740329193670537}
-  m_Layer: 8
+  - component: {fileID: 5448421402802300756}
+  m_Layer: 9
   m_Name: R.Tomato
-  m_TagString: Ingredients
+  m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -139,7 +137,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &4890950028532176383
@@ -160,7 +158,7 @@ MonoBehaviour:
   spawnCount: 5
   cutCount: 5
   scaleDecrease: {x: 2, y: 2, z: 2}
---- !u!114 &5565880394251500932
+--- !u!114 &5448421402802300756
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,31 +167,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1754877053404765409}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c4d11a8d971e1f4d94ed99b0ddb1d14, type: 3}
+  m_Script: {fileID: 11500000, guid: f8c6baaf983275949b77cae2a750a9e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lerpSpeed: 10
---- !u!114 &8331694149483449097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1754877053404765409}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f7b82b3ac985ca40969c3a6b3d11367, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3414740329193670537
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1754877053404765409}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 694f589e69463a34eb84eef1374323a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
