@@ -14,7 +14,11 @@ public class PlatingObjects : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (transform.parent == null)
+        {
+            GetComponent<Rigidbody>().isKinematic = false;
+            GetComponent<Rigidbody>().freezeRotation = false;
+        }
     }
 
     /*
@@ -76,6 +80,7 @@ public class PlatingObjects : MonoBehaviour
                 other.transform.SetParent(transform);
                 BoxCollider[] boxes = GetComponents<BoxCollider>();
                 boxes[0].enabled = false;
+                GetComponent<PlatingObjects>().enabled = false;
             }
         }
     }
