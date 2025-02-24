@@ -11,8 +11,9 @@ public class GrabObject : MonoBehaviour
     private int playerLayer;
     private int grabPointLayer;
 
-    // Lerp speed
+    // Lerp speed and damping
     public float lerpSpeed = 10f;
+    public float heldDamping = 5f; // Damping when held
 
     private void Awake()
     {
@@ -29,6 +30,7 @@ public class GrabObject : MonoBehaviour
     {
         this.objectGrabPointTransform = objectGrabPointTransform;
         objectRigidBody.useGravity = false; // Disable gravity when grabbed
+        objectRigidBody.linearDamping = heldDamping; // Set damping when held
         gameObject.layer = pickedUpLayer; // Change to IsPickedUp layer
 
         // Ignore collisions with the Player and GrabPoint layers
@@ -36,10 +38,11 @@ public class GrabObject : MonoBehaviour
         Physics.IgnoreLayerCollision(pickedUpLayer, grabPointLayer, true);
     }
 
-    public void Drop(Vector3 dropPoint) // Accept dropPoint parameter
+    public void Drop(Vector3 dropPoint)
     {
         this.objectGrabPointTransform = null;
         objectRigidBody.useGravity = true; // Re-enable gravity when dropped
+        objectRigidBody.linearDamping = 0f; // Reset damping when dropped
         gameObject.layer = originalLayer; // Revert to original layer
 
         // Re-enable collisions with the Player and GrabPoint layers
