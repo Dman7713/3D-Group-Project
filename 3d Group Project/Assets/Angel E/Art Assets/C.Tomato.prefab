@@ -15,9 +15,11 @@ GameObject:
   - component: {fileID: 8215854042831555439}
   - component: {fileID: 6727342647764802063}
   - component: {fileID: 910297777242424298}
-  m_Layer: 9
+  - component: {fileID: 3766189881686413217}
+  - component: {fileID: 5550173017211102027}
+  m_Layer: 8
   m_Name: C.Tomato
-  m_TagString: Pickup
+  m_TagString: Ingredients
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -174,3 +176,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.00952186, y: 0.0072927047, z: 0.0036223046}
   m_Center: {x: -0.000036807938, y: -0.0003058811, z: -0.00009094246}
+--- !u!114 &3766189881686413217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4702839685255490909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f7b82b3ac985ca40969c3a6b3d11367, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5550173017211102027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4702839685255490909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694f589e69463a34eb84eef1374323a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

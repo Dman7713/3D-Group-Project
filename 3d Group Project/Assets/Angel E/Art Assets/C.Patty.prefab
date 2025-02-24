@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 4512853203114614410}
   - component: {fileID: 3315436006967979052}
   - component: {fileID: 7202215763551770049}
+  - component: {fileID: 6106904151480296075}
+  - component: {fileID: 5989547827712076056}
   m_Layer: 8
   m_Name: C.Patty
   m_TagString: Ingredients
@@ -167,9 +169,33 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.007199278, y: 0.009418743, z: 0.003893113}
   m_Center: {x: 0.00053780765, y: -0.00014644422, z: -0.000025176105}
+--- !u!114 &6106904151480296075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5543512732864917865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f7b82b3ac985ca40969c3a6b3d11367, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5989547827712076056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5543512732864917865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 694f589e69463a34eb84eef1374323a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
