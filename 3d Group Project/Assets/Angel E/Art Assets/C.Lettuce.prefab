@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 2262322716625705408}
   m_Layer: 8
   m_Name: C.Lettuce
-  m_TagString: Ingredients
+  m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -154,6 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lerpSpeed: 10
+  heldDamping: 5
 --- !u!65 &4981769703646328259
 BoxCollider:
   m_ObjectHideFlags: 0

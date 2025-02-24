@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 1242788457300444928}
   - component: {fileID: 8408610110298505971}
   - component: {fileID: 89695425181308962}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: C.Cheese
-  m_TagString: Ingredients
+  m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -151,3 +151,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lerpSpeed: 10
+  heldDamping: 5

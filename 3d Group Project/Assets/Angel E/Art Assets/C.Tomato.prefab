@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 5550173017211102027}
   m_Layer: 8
   m_Name: C.Tomato
-  m_TagString: Ingredients
+  m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -155,6 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lerpSpeed: 10
+  heldDamping: 5
 --- !u!65 &910297777242424298
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 2052927277673280747}
   m_Layer: 8
   m_Name: Knife2
-  m_TagString: canPickUp
+  m_TagString: Pickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
