@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4981769703646328259}
   - component: {fileID: 7352868846130231860}
   - component: {fileID: 2262322716625705408}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: C.Lettuce
   m_TagString: Pickup
   m_Icon: {fileID: 0}
@@ -188,6 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7b82b3ac985ca40969c3a6b3d11367, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetLayerName: Pickup
 --- !u!114 &2262322716625705408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,3 +201,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 694f589e69463a34eb84eef1374323a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetLayerName: PickUP

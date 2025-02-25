@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 910297777242424298}
   - component: {fileID: 3766189881686413217}
   - component: {fileID: 5550173017211102027}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: C.Tomato
   m_TagString: Pickup
   m_Icon: {fileID: 0}
@@ -189,6 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7b82b3ac985ca40969c3a6b3d11367, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetLayerName: Pickup
 --- !u!114 &5550173017211102027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,3 +202,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 694f589e69463a34eb84eef1374323a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetLayerName: PickUP

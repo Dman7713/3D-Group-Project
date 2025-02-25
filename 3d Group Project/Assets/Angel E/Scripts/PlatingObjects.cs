@@ -1,14 +1,16 @@
 using UnityEngine;
+using UnityEngine.Jobs;
 
 public class PlatingObjects : MonoBehaviour
 {
+    [SerializeField]
+    public string targetLayerName = "Pickup";
     /// <summary>
     /// private Vector3 originalWorldScale;
     /// </summary>
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -62,9 +64,11 @@ public class PlatingObjects : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        int targetLayer = LayerMask.NameToLayer(targetLayerName);
         if (GetComponent<PlatingObjects>().enabled == true)
         { 
-            if (other.transform.parent != transform && other.transform.tag == "Ingredients" && other.name != transform.parent.name)
+            if (other.transform.parent != transform && other.transform.tag == "Ingredients" && other.transform != transform.parent 
+                || other.transform.parent != transform && other.transform.tag == "Pickup" && other.gameObject.layer == targetLayer && other.transform != transform.parent)
             {
                 Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
                 if (rb != null)
@@ -80,6 +84,7 @@ public class PlatingObjects : MonoBehaviour
                 other.transform.SetParent(transform);
                 BoxCollider[] boxes = GetComponents<BoxCollider>();
                 boxes[0].enabled = false;
+                boxes[0].isTrigger = false;
                 GetComponent<PlatingObjects>().enabled = false;
             }
         }

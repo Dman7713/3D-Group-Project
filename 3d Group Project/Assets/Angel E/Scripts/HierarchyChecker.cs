@@ -7,18 +7,21 @@ public class HierarchyChecker : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject == null) return;
-
-        List<string> hierarchyNames = new List<string>();
-        CollectNames(other.gameObject, hierarchyNames);
-
-        if (CheckNameMatch(hierarchyNames, expectedNames))
+        if (other.name == "Plate")
         {
-            Debug.Log($"Object {other.gameObject.name}: Hierarchy matches expected names!");
-        }
-        else
-        {
-            Debug.Log($"Object {other.gameObject.name}: Hierarchy does NOT match expected names.");
+            if (other.gameObject == null) return;
+
+            List<string> hierarchyNames = new List<string>();
+            CollectNames(other.gameObject, hierarchyNames);
+
+            if (CheckNameMatch(hierarchyNames, expectedNames))
+            {
+                Debug.Log($"Object {other.gameObject.name}: Hierarchy matches expected names!");
+            }
+            else
+            {
+                Debug.Log($"Object {other.gameObject.name}: Hierarchy does NOT match expected names.");
+            }
         }
     }
 
