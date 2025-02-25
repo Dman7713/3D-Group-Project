@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7b82b3ac985ca40969c3a6b3d11367, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetLayerName: Pickup
+  targetLayerName: PickUP
 --- !u!114 &2262322716625705408
 MonoBehaviour:
   m_ObjectHideFlags: 0

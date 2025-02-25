@@ -4,7 +4,7 @@ using UnityEngine.Jobs;
 public class PlatingObjects : MonoBehaviour
 {
     [SerializeField]
-    public string targetLayerName = "Pickup";
+    public string targetLayerName = "PickUP";
     /// <summary>
     /// private Vector3 originalWorldScale;
     /// </summary>
