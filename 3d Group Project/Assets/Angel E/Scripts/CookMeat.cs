@@ -7,10 +7,12 @@ public class CookMeat : MonoBehaviour
     [SerializeField] private float cookTime = 5f; // Time in seconds to cook
     [SerializeField] private AudioSource sizzlingSound; // Sizzle sound (optional)
     [SerializeField] private ParticleSystem smokeEffect; // Smoke particle system
+    [SerializeField] private float destroyTime = 10f; // Time before raw meat is destroyed after cooking starts
 
     private bool isCooking = false;
     private Vector3 spawnPos;
     private Quaternion spawnRot;
+    private float destroyTimer = 0f;
 
     void Start()
     {
@@ -29,11 +31,18 @@ public class CookMeat : MonoBehaviour
         if (isCooking)
         {
             cookTime -= Time.deltaTime;
+            destroyTimer += Time.deltaTime; // Track time for destruction
             Debug.Log($"Cooking... Time left: {cookTime:F2}");
 
             if (cookTime <= 0)
             {
                 Cook();
+            }
+
+            if (destroyTimer >= destroyTime) // Destroy object after certain time
+            {
+                Destroy(gameObject); // Destroys the object
+                Debug.Log("Raw meat destroyed due to time limit.");
             }
         }
     }
