@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1242788457300444928}
   - component: {fileID: 8408610110298505971}
   - component: {fileID: 89695425181308962}
+  - component: {fileID: 9131075882352283332}
   m_Layer: 9
   m_Name: C.Cheese
   m_TagString: Pickup
@@ -135,7 +136,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!114 &89695425181308962
@@ -152,3 +153,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lerpSpeed: 10
   heldDamping: 5
+--- !u!114 &9131075882352283332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8478748921281652622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d01bc88dbbdee6b45b7335e1509accb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cookedM: {fileID: 0}
+  spawnScale: {x: 1, y: 1, z: 1}
+  cookTime: 5
+  sizzlingSound: {fileID: 0}
+  smokeEffect: {fileID: 0}
+  destroyTime: 10
