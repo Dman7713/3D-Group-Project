@@ -17,6 +17,7 @@ public class PickUpScript : MonoBehaviour
     private Rigidbody heldObjRb; //rigidbody of object we pick up
     private bool canDrop = true; //this is needed so we don't throw/drop object when rotating the object
     private int LayerNumber; //layer index
+    private int LayerKeep; // an integer to store the layer of an object
     private bool isRotating = false;
     //Reference to script which includes mouse movement of player (looking around)
     //we want to disable the player looking around when rotating the object
@@ -78,6 +79,7 @@ public class PickUpScript : MonoBehaviour
             }
             //heldObjRb.isKinematic = true;
             heldObjRb.transform.parent = holdPos.transform; //parent object to holdposition
+            LayerKeep = heldObj.layer; // store the layer of the held object
             heldObj.layer = LayerNumber; //change the object layer to the holdLayer
             //make sure object doesnt collide with player, it can cause weird bugs
             Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), true);
@@ -94,7 +96,7 @@ public class PickUpScript : MonoBehaviour
         Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
         heldObjRb.angularVelocity = Vector3.zero;
         heldObjRb.linearVelocity = Vector3.zero;
-        heldObj.layer = 0; //object assigned back to default layer
+        heldObj.layer = LayerKeep; //object assigned back to its default layer
         //heldObjRb.isKinematic = false;
         heldObj.transform.parent = null; //unparent object
         heldObj.transform.position = holdPos.transform.position;
