@@ -4849,9 +4849,10 @@ GameObject:
   - component: {fileID: 4289588270788232347}
   - component: {fileID: 4494666719256353755}
   - component: {fileID: 3220204756516249805}
+  - component: {fileID: 5662553359685184384}
   m_Layer: 9
   m_Name: T.Bun
-  m_TagString: Pickup
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5000,9 +5001,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd33b89dd6682b04883dfa48d54a51ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredTag: Enemy
-  targetTag: Fod
-  collisionTimeLimit: 2
+  targetLayer: TargetLayer
+  stovetopLayer: Stovetop
+  timeToDestroy: 5
+  blackenStartTime: 1
+  smokeParticles: {fileID: 0}
 --- !u!114 &3220204756516249805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5021,3 +5024,20 @@ MonoBehaviour:
   sizzlingSound: {fileID: 0}
   smokeEffect: {fileID: 2263401891299071443}
   destroyTime: 10
+--- !u!114 &5662553359685184384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5099083858597651678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd33b89dd6682b04883dfa48d54a51ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetLayer: Stovetop
+  stovetopLayer: Stovetop
+  timeToDestroy: 15
+  blackenStartTime: 5
+  smokeParticles: {fileID: 2263401891299071443}

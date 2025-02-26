@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8408610110298505971}
   - component: {fileID: 89695425181308962}
   - component: {fileID: 9131075882352283332}
+  - component: {fileID: 3796824161835233050}
   m_Layer: 9
   m_Name: C.Cheese
   m_TagString: Pickup
@@ -171,3 +172,20 @@ MonoBehaviour:
   sizzlingSound: {fileID: 0}
   smokeEffect: {fileID: 0}
   destroyTime: 10
+--- !u!114 &3796824161835233050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8478748921281652622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd33b89dd6682b04883dfa48d54a51ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetLayer: Stovetop
+  stovetopLayer: Stovetop
+  timeToDestroy: 15
+  blackenStartTime: 5
+  smokeParticles: {fileID: 0}

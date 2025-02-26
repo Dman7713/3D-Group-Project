@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4890950028532176383}
   - component: {fileID: 5448421402802300756}
   - component: {fileID: 4433579784215197827}
+  - component: {fileID: 1376294142316821655}
   m_Layer: 9
   m_Name: R.Tomato
   m_TagString: Pickup
@@ -157,8 +158,8 @@ MonoBehaviour:
   cutV: {fileID: 4702839685255490909, guid: 4bec9b316c4e95d4f908b93ec5370020, type: 3}
   spawnDiff: {x: 0, y: 0.5, z: 0}
   spawnScale: {x: 18, y: 18, z: 18}
-  spawnCount: 5
-  cutCount: 5
+  spawnCount: 4
+  cutCount: 4
   scaleDecrease: {x: 2, y: 2, z: 2}
 --- !u!114 &5448421402802300756
 MonoBehaviour:
@@ -192,6 +193,23 @@ MonoBehaviour:
   sizzlingSound: {fileID: 0}
   smokeEffect: {fileID: 1573616512300020202}
   destroyTime: 10
+--- !u!114 &1376294142316821655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754877053404765409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd33b89dd6682b04883dfa48d54a51ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetLayer: Stovetop
+  stovetopLayer: Stovetop
+  timeToDestroy: 15
+  blackenStartTime: 5
+  smokeParticles: {fileID: 1573616512300020202}
 --- !u!1 &3403226604408050610
 GameObject:
   m_ObjectHideFlags: 0

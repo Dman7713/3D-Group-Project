@@ -4848,9 +4848,10 @@ GameObject:
   - component: {fileID: 6873488866045488414}
   - component: {fileID: 831259947671183739}
   - component: {fileID: 1050957394366353018}
+  - component: {fileID: 1011639058083406527}
   m_Layer: 9
   m_Name: B.Bun
-  m_TagString: Pickup
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5005,3 +5006,20 @@ MonoBehaviour:
   sizzlingSound: {fileID: 0}
   smokeEffect: {fileID: 6172382279323135149}
   destroyTime: 10
+--- !u!114 &1011639058083406527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1457483139994174549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd33b89dd6682b04883dfa48d54a51ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetLayer: Stovetop
+  stovetopLayer: Stovetop
+  timeToDestroy: 15
+  blackenStartTime: 5
+  smokeParticles: {fileID: 6172382279323135149}

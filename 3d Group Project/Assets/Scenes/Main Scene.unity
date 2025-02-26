@@ -576,11 +576,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53141476}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!198 &72261054 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6172382279323135149, guid: 4abaac5598b9e0544b95a4f056b623dd, type: 3}
-  m_PrefabInstance: {fileID: 1238193875}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &81105723
 GameObject:
   m_ObjectHideFlags: 0
@@ -1510,11 +1505,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 189178121}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!198 &193850023 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 3820031563461707592, guid: 72a4f6a7f4fed9040893ed0b74b95276, type: 3}
-  m_PrefabInstance: {fileID: 1554253286}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &203934048
 GameObject:
   m_ObjectHideFlags: 0
@@ -1839,28 +1829,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 220706199}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &222953028 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5099083858597651678, guid: d3690f15a4859f646ae0745637bfb291, type: 3}
-  m_PrefabInstance: {fileID: 1422712997}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &222953037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 222953028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd33b89dd6682b04883dfa48d54a51ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLayer: Stovetop
-  stovetopLayer: Stovetop
-  timeToDestroy: 15
-  blackenStartTime: 5
-  smokeParticles: {fileID: 1554349423}
 --- !u!1 &228603729
 GameObject:
   m_ObjectHideFlags: 0
@@ -2904,28 +2872,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 332084724}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &337276834 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1754877053404765409, guid: 783b298834de1894b84c82ac1bde72ac, type: 3}
-  m_PrefabInstance: {fileID: 753119287}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &337276843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 337276834}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd33b89dd6682b04883dfa48d54a51ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLayer: Stovetop
-  stovetopLayer: Stovetop
-  timeToDestroy: 15
-  blackenStartTime: 5
-  smokeParticles: {fileID: 1663249987}
 --- !u!1 &372579773 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 281855664364225751, guid: 5331d7a6b921f214ea64a9d339bb5411, type: 3}
@@ -6335,22 +6281,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: R.Tomato
       objectReference: {fileID: 0}
-    - target: {fileID: 1754877053404765409, guid: 783b298834de1894b84c82ac1bde72ac, type: 3}
-      propertyPath: m_TagString
-      value: Pickup
-      objectReference: {fileID: 0}
-    - target: {fileID: 4890950028532176383, guid: 783b298834de1894b84c82ac1bde72ac, type: 3}
-      propertyPath: cutCount
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4890950028532176383, guid: 783b298834de1894b84c82ac1bde72ac, type: 3}
-      propertyPath: spawnCount
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4890950028532176383, guid: 783b298834de1894b84c82ac1bde72ac, type: 3}
-      propertyPath: scaleDecrease.x
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 6531067526668636827, guid: 783b298834de1894b84c82ac1bde72ac, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.025908709
@@ -6394,10 +6324,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1754877053404765409, guid: 783b298834de1894b84c82ac1bde72ac, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 337276843}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 783b298834de1894b84c82ac1bde72ac, type: 3}
 --- !u!1 &769816952
 GameObject:
@@ -6564,46 +6491,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ceba7cf301e292e44a2add27c316f095, type: 3}
---- !u!1 &813041267 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4707096444775309243, guid: 72a4f6a7f4fed9040893ed0b74b95276, type: 3}
-  m_PrefabInstance: {fileID: 1554253286}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &813041274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 813041267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d01bc88dbbdee6b45b7335e1509accb2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cookedM: {fileID: 0}
-  spawnScale: {x: 1, y: 1, z: 1}
-  cookTime: 5
-  sizzlingSound: {fileID: 0}
-  smokeEffect: {fileID: 193850023}
-  destroyTime: 10
---- !u!114 &813041282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 813041267}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd33b89dd6682b04883dfa48d54a51ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLayer: Stovetop
-  stovetopLayer: Stovetop
-  timeToDestroy: 15
-  blackenStartTime: 5
-  smokeParticles: {fileID: 193850023}
 --- !u!1001 &820027996
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7603,28 +7490,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1009713624 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2319915102901714148, guid: 932818406de22c54285134bdcdb8bc8d, type: 3}
-  m_PrefabInstance: {fileID: 1913707023}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1009713634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1009713624}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd33b89dd6682b04883dfa48d54a51ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLayer: Stovetop
-  stovetopLayer: Stovetop
-  timeToDestroy: 15
-  blackenStartTime: 5
-  smokeParticles: {fileID: 0}
 --- !u!1 &1048808996
 GameObject:
   m_ObjectHideFlags: 0
@@ -8620,28 +8485,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1135242094}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1156587859 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8478748921281652622, guid: 726b6289770fe7c49b7c39e5bb5ad2ed, type: 3}
-  m_PrefabInstance: {fileID: 9220659920506964580}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1156587867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1156587859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd33b89dd6682b04883dfa48d54a51ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLayer: Stovetop
-  stovetopLayer: Stovetop
-  timeToDestroy: 15
-  blackenStartTime: 5
-  smokeParticles: {fileID: 0}
 --- !u!1 &1163053034
 GameObject:
   m_ObjectHideFlags: 0
@@ -8784,17 +8627,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1050957394366353018, guid: 4abaac5598b9e0544b95a4f056b623dd, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1457483139994174549, guid: 4abaac5598b9e0544b95a4f056b623dd, type: 3}
       propertyPath: m_Name
       value: B.Bun
-      objectReference: {fileID: 0}
-    - target: {fileID: 1457483139994174549, guid: 4abaac5598b9e0544b95a4f056b623dd, type: 3}
-      propertyPath: m_TagString
-      value: Item
       objectReference: {fileID: 0}
     - target: {fileID: 2961214513120225067, guid: 4abaac5598b9e0544b95a4f056b623dd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8839,10 +8674,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1457483139994174549, guid: 4abaac5598b9e0544b95a4f056b623dd, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1804822388}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4abaac5598b9e0544b95a4f056b623dd, type: 3}
 --- !u!1001 &1266513678
 PrefabInstance:
@@ -9882,23 +9714,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: T.Bun
       objectReference: {fileID: 0}
-    - target: {fileID: 5099083858597651678, guid: d3690f15a4859f646ae0745637bfb291, type: 3}
-      propertyPath: m_TagString
-      value: Item
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5099083858597651678, guid: d3690f15a4859f646ae0745637bfb291, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 222953037}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3690f15a4859f646ae0745637bfb291, type: 3}
---- !u!198 &1450546012 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6242939024153669509, guid: 4bec9b316c4e95d4f908b93ec5370020, type: 3}
-  m_PrefabInstance: {fileID: 1366091595441869982}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1451959969
 GameObject:
   m_ObjectHideFlags: 0
@@ -10214,28 +10034,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!1 &1463869372 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4702839685255490909, guid: 4bec9b316c4e95d4f908b93ec5370020, type: 3}
-  m_PrefabInstance: {fileID: 1366091595441869982}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1463869383
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1463869372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd33b89dd6682b04883dfa48d54a51ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLayer: Stovetop
-  stovetopLayer: Stovetop
-  timeToDestroy: 15
-  blackenStartTime: 5
-  smokeParticles: {fileID: 1450546012}
 --- !u!1 &1467633547
 GameObject:
   m_ObjectHideFlags: 0
@@ -11105,26 +10903,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: R.Lettuce
       objectReference: {fileID: 0}
-    - target: {fileID: 4707096444775309243, guid: 72a4f6a7f4fed9040893ed0b74b95276, type: 3}
-      propertyPath: m_TagString
-      value: Pickup
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4707096444775309243, guid: 72a4f6a7f4fed9040893ed0b74b95276, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 813041274}
-    - targetCorrespondingSourceObject: {fileID: 4707096444775309243, guid: 72a4f6a7f4fed9040893ed0b74b95276, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 813041282}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72a4f6a7f4fed9040893ed0b74b95276, type: 3}
---- !u!198 &1554349423 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 2263401891299071443, guid: d3690f15a4859f646ae0745637bfb291, type: 3}
-  m_PrefabInstance: {fileID: 1422712997}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1556265869
 GameObject:
   m_ObjectHideFlags: 0
@@ -12146,11 +11929,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1659918284}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!198 &1663249987 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 1573616512300020202, guid: 783b298834de1894b84c82ac1bde72ac, type: 3}
-  m_PrefabInstance: {fileID: 753119287}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1664343660
 GameObject:
   m_ObjectHideFlags: 0
@@ -13463,28 +13241,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ceba7cf301e292e44a2add27c316f095, type: 3}
---- !u!1 &1804822380 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1457483139994174549, guid: 4abaac5598b9e0544b95a4f056b623dd, type: 3}
-  m_PrefabInstance: {fileID: 1238193875}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1804822388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1804822380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd33b89dd6682b04883dfa48d54a51ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLayer: Stovetop
-  stovetopLayer: Stovetop
-  timeToDestroy: 15
-  blackenStartTime: 5
-  smokeParticles: {fileID: 72261054}
 --- !u!1 &1825342356
 GameObject:
   m_ObjectHideFlags: 0
@@ -13928,18 +13684,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: C.Lettuce
       objectReference: {fileID: 0}
-    - target: {fileID: 6015054952680077017, guid: 932818406de22c54285134bdcdb8bc8d, type: 3}
-      propertyPath: m_Convex
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4981769703646328259, guid: 932818406de22c54285134bdcdb8bc8d, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2319915102901714148, guid: 932818406de22c54285134bdcdb8bc8d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1009713634}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 932818406de22c54285134bdcdb8bc8d, type: 3}
 --- !u!1001 &1914994541
 PrefabInstance:
@@ -16081,10 +15829,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: C.Tomato
       objectReference: {fileID: 0}
-    - target: {fileID: 4702839685255490909, guid: 4bec9b316c4e95d4f908b93ec5370020, type: 3}
-      propertyPath: m_TagString
-      value: Pickup
-      objectReference: {fileID: 0}
     - target: {fileID: 7697743968892436400, guid: 4bec9b316c4e95d4f908b93ec5370020, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.5980969
@@ -16128,10 +15872,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4702839685255490909, guid: 4bec9b316c4e95d4f908b93ec5370020, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1463869383}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4bec9b316c4e95d4f908b93ec5370020, type: 3}
 --- !u!1 &1384858284067653091
 GameObject:
@@ -16739,10 +16480,6 @@ PrefabInstance:
     - target: {fileID: 637071320524893339, guid: 9cdda7e9efcf76a429e2cf1ab54b37c0, type: 3}
       propertyPath: m_Name
       value: Plate
-      objectReference: {fileID: 0}
-    - target: {fileID: 637071320524893339, guid: 9cdda7e9efcf76a429e2cf1ab54b37c0, type: 3}
-      propertyPath: m_TagString
-      value: Pickup
       objectReference: {fileID: 0}
     - target: {fileID: 4969707159860524127, guid: 9cdda7e9efcf76a429e2cf1ab54b37c0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -17393,10 +17130,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8478748921281652622, guid: 726b6289770fe7c49b7c39e5bb5ad2ed, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1156587867}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 726b6289770fe7c49b7c39e5bb5ad2ed, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
