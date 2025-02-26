@@ -4847,7 +4847,6 @@ GameObject:
   - component: {fileID: 7957123741530608034}
   - component: {fileID: 2699926687479121229}
   - component: {fileID: 4289588270788232347}
-  - component: {fileID: 4494666719256353755}
   - component: {fileID: 3220204756516249805}
   - component: {fileID: 5662553359685184384}
   m_Layer: 9
@@ -4989,23 +4988,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lerpSpeed: 10
   heldDamping: 5
---- !u!114 &4494666719256353755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5099083858597651678}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd33b89dd6682b04883dfa48d54a51ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLayer: TargetLayer
-  stovetopLayer: Stovetop
-  timeToDestroy: 5
-  blackenStartTime: 1
-  smokeParticles: {fileID: 0}
 --- !u!114 &3220204756516249805
 MonoBehaviour:
   m_ObjectHideFlags: 0

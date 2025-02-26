@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd33b89dd6682b04883dfa48d54a51ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetLayer: TargetLayer
+  targetLayer: Stovetop
   stovetopLayer: Stovetop
   timeToDestroy: 15
   blackenStartTime: 5
