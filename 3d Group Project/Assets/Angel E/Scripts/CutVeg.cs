@@ -31,7 +31,7 @@ public class CutVeg : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.name == "Knife")
+        if (collision.collider.tag == "Knife")
         {
             cutCount -= 1;
             transform.localScale -= scaleDecrease;
