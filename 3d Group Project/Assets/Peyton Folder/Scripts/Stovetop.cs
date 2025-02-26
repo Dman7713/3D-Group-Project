@@ -1,42 +1,48 @@
 using UnityEngine;
+using System.Collections;
 
-public class TagCollisionDestroy : MonoBehaviour
+
+public class TimedDestruction : MonoBehaviour
 {
-    public string requiredTag = "Stovetop"; // The tag the object needs to collide with
-    public string targetTag = "Pickup"; // The tag of the object that will be destroyed
-    public float collisionTimeLimit = 2f; // Time in seconds before the object is destroyed
-    private float collisionTime = 0f;
-    private bool isColliding = false;
+    public string targetLayer = "TargetLayer"; // Layer the object needs to touch
+    public float timeToDestroy = 5f; // Time before destruction
+    public float blackenStartTime = 1f; // Time before the object starts turning black
+    private float timer;
+    private Renderer objectRenderer;
 
-    private void OnCollisionStay2D(Collision2D collision)
+    void Start()
     {
-        // Check if the other object has the required tag
-        if (collision.gameObject.CompareTag(requiredTag))
+        timer = timeToDestroy;
+        objectRenderer = GetComponent<Renderer>();
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        // Check if the object collides with the specified layer
+        if (collision.gameObject.layer == LayerMask.NameToLayer(targetLayer))
         {
-            if (!isColliding)
-            {
-                isColliding = true;
-                collisionTime = 0f; // Reset the timer when collision starts
-            }
-
-            // If still colliding, count the time
-            collisionTime += Time.deltaTime;
-
-            // If the time exceeds the limit, destroy the target object
-            if (collisionTime >= collisionTimeLimit && gameObject.CompareTag(targetTag))
-            {
-                Destroy(gameObject);
-            }
+            StartCoroutine(DestroyAfterTime());
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    IEnumerator DestroyAfterTime()
     {
-        // Stop the timer if no longer colliding
-        if (collision.gameObject.CompareTag(requiredTag))
+        while (timer > 0)
         {
-            isColliding = false;
-            collisionTime = 0f;
+            // Decrease the timer
+            timer -= Time.deltaTime;
+
+            // Check if we should start turning the object black
+            if (timer <= blackenStartTime && objectRenderer != null)
+            {
+                float blackenAmount = (timeToDestroy - timer) / blackenStartTime; // How much to change color
+                objectRenderer.material.color = Color.Lerp(objectRenderer.material.color, Color.black, blackenAmount);
+            }
+
+            yield return null;
         }
+
+        // Destroy the object once the timer reaches 0
+        Destroy(gameObject);
     }
 }
