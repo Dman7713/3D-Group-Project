@@ -22,6 +22,9 @@ public class PlayerPickAndDrop : MonoBehaviour
                     {
                         grabbedObject = objectToGrab;
                         grabbedObject.Grab(objectGrabPointTransform);
+
+                        // Align object to face the player when it's grabbed
+                        AlignObjectToPlayer(grabbedObject.transform);
                     }
                 }
             }
@@ -30,6 +33,12 @@ public class PlayerPickAndDrop : MonoBehaviour
         if (Input.GetMouseButtonUp(0) && grabbedObject != null) // Release left mouse button to drop
         {
             DropItem();
+        }
+
+        // If an object is grabbed, continue to face the player even if the camera moves
+        if (grabbedObject != null)
+        {
+            AlignObjectToPlayer(grabbedObject.transform);
         }
     }
 
@@ -50,5 +59,29 @@ public class PlayerPickAndDrop : MonoBehaviour
         }
 
         grabbedObject = null;
+    }
+
+    private void AlignObjectToPlayer(Transform objectTransform)
+    {
+        // Check if the object has the "Item" tag
+        if (objectTransform.CompareTag("Item"))
+        {
+            // Continuously make the object's forward direction face away from the player
+            objectTransform.forward = -playerCameraTransform.forward;
+
+            // OPTIONAL: If the object has a specific handle direction, adjust it
+            // Adjust rotation depending on the model (e.g., handle always points up or to the side)
+            objectTransform.Rotate(Vector3.right, -60f); // This may need adjustment based on your model
+        }
+        if (objectTransform.CompareTag("Knife"))
+        {
+            // Continuously make the object's forward direction face away from the player
+            objectTransform.forward = -playerCameraTransform.forward;
+
+            // OPTIONAL: If the object has a specific handle direction, adjust it
+            // Adjust rotation depending on the model (e.g., handle always points up or to the side)
+            objectTransform.Rotate(Vector3.right, -50f); // This may need adjustment based on your model
+            objectTransform.Rotate(Vector3.down, 10f);
+        }
     }
 }

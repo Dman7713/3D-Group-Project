@@ -9,6 +9,9 @@ TagManager:
   - Stovetop
   - Ingredients
   - Pickup
+  - Item
+  - Knife
+  - Burnt
   layers:
   - Default
   - TransparentFX
