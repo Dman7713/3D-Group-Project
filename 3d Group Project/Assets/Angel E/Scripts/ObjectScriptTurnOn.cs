@@ -1,41 +1,63 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ObjectScriptTurnOn : MonoBehaviour
 {
-    PlatingObjects platingobjects;
+    private PlatingObjects platingObjects;
     [SerializeField]
-    public string targetLayerName = "PickUP";
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private string targetLayerName = "PickUP";
+
     void Start()
     {
-        // disable the plating objects script on start, excludes the plate
-        if (transform.name != "Plate")
+        platingObjects = GetComponent<PlatingObjects>();
+
+        // Disable the PlatingObjects script on start, excluding the object named "Plate"
+        if (transform.name != "Plate" && platingObjects != null)
         {
-            GetComponent<PlatingObjects>().enabled = false;
+            platingObjects.enabled = false;
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        int PickupLayer = LayerMask.NameToLayer(targetLayerName);
-        GameObject parent = transform.parent.gameObject;
-        // once an ingredient is child to the plate or an ingredient enable the scriptS
-        if (transform.parent.name == "Plate" || transform.parent.tag == "Ingredients" || transform.parent.tag == "Pickup" && parent.layer == PickupLayer)
+        int pickupLayer = LayerMask.NameToLayer(targetLayerName);
+        GameObject parent = transform.parent ? transform.parent.gameObject : null;
+
+        // Enable the script if the object is parented to "Plate" or an object with the "Ingredients" or "Pickup" tag and the correct layer
+        if (parent != null && (parent.name == "Plate" || parent.CompareTag("Ingredients") || (parent.CompareTag("Pickup") && parent.layer == pickupLayer)))
         {
-            GetComponent<PlatingObjects>().enabled = true;
+            if (platingObjects != null)
+            {
+                platingObjects.enabled = true;
+            }
         }
-        if (transform.parent == null && transform.name != "Plate")
+        else if (transform.parent == null && transform.name != "Plate")
         {
-            GetComponent<PlatingObjects>().enabled = false;
-            GetComponent<Rigidbody>().isKinematic = false;
+            if (platingObjects != null)
+            {
+                platingObjects.enabled = false;
+            }
+            Rigidbody rb = GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.isKinematic = false;
+            }
         }
 
-        if (transform.childCount == 1)
+        // Check if any child object's name contains "Smoke"
+        bool hasSmokeChild = false;
+        for (int i = 0; i < transform.childCount; i++)
         {
-            GetComponent<PlatingObjects>().enabled = false;
+            if (transform.GetChild(i).name.Contains("Smoke"))
+            {
+                hasSmokeChild = true;
+                break;
+            }
+        }
+
+        // if the scripted object has a child, turn off the plating script (ignore smoke child object)
+        if (platingObjects != null && (transform.childCount == 1 && hasSmokeChild != true || transform.childCount == 2 && hasSmokeChild == true))
+        {
+            platingObjects.enabled = false;
         }
     }
 }
-

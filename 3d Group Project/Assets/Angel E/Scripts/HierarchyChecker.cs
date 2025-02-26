@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class HierarchyChecker : MonoBehaviour
+public class HierarchyTriggerChecker : MonoBehaviour
 {
     [SerializeField] private List<string> expectedNames = new List<string>(); // Expected hierarchy names
 
@@ -17,10 +17,12 @@ public class HierarchyChecker : MonoBehaviour
             if (CheckNameMatch(hierarchyNames, expectedNames))
             {
                 Debug.Log($"Object {other.gameObject.name}: Hierarchy matches expected names!");
+                Debug.Log("Hierarchy: " + hierarchyNames);
             }
             else
             {
                 Debug.Log($"Object {other.gameObject.name}: Hierarchy does NOT match expected names.");
+                Debug.Log("Hierarchy: " + hierarchyNames);
             }
         }
     }
@@ -29,16 +31,26 @@ public class HierarchyChecker : MonoBehaviour
     {
         while (obj != null)
         {
-            nameList.Add(obj.name);
-            if (obj.transform.childCount > 0)
+            if (obj.name != "Smoke") // Skip objects named "Smoke"
             {
-                obj = obj.transform.GetChild(0).gameObject;
+                nameList.Add(obj.name);
             }
-            else
+
+            // Find the next child that is NOT named "Smoke"
+            obj = GetValidChild(obj);
+        }
+    }
+
+    GameObject GetValidChild(GameObject parent)
+    {
+        foreach (Transform child in parent.transform)
+        {
+            if (child.gameObject.name != "Smoke") // Ignore "Smoke"
             {
-                obj = null;
+                return child.gameObject;
             }
         }
+        return null; // No valid child found
     }
 
     bool CheckNameMatch(List<string> hierarchy, List<string> expected)

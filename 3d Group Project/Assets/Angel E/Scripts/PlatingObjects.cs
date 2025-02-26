@@ -5,9 +5,7 @@ public class PlatingObjects : MonoBehaviour
 {
     [SerializeField]
     public string targetLayerName = "PickUP";
-    /// <summary>
-    /// private Vector3 originalWorldScale;
-    /// </summary>
+     private Vector3 originalWorldScale;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -64,6 +62,7 @@ public class PlatingObjects : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        originalWorldScale = other.transform.lossyScale;
         int targetLayer = LayerMask.NameToLayer(targetLayerName);
         if (GetComponent<PlatingObjects>().enabled == true)
         { 
@@ -86,12 +85,11 @@ public class PlatingObjects : MonoBehaviour
                 boxes[0].enabled = false;
                 boxes[0].isTrigger = false;
                 GetComponent<PlatingObjects>().enabled = false;
+                other.transform.localScale = new Vector3(originalWorldScale.x / transform.lossyScale.x, originalWorldScale.y / transform.lossyScale.y, originalWorldScale.z / transform.lossyScale.z);
             }
         }
     }
 }
 // errors:
-// * objects can still be interacted with while on the plate
-// * objects clip through the plate (currently only buns stay on)
-// * objects warp and change size
-// * 
+// * plated objects displacement on pickup and drop
+// * scaling issues after placing the cheese, objects narrow to fit its thinner size
