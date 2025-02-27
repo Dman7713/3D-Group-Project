@@ -155,7 +155,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cutV: {fileID: 2319915102901714148, guid: 932818406de22c54285134bdcdb8bc8d, type: 3}
-  spawnDiff: {x: 0, y: 0.5, z: 0}
+  burntV: {fileID: 542248792420178770, guid: c16edb2e719418b4f8fc4b818b796239, type: 3}
+  spawnDiff: {x: 0, y: 0.2, z: 0}
   spawnScale: {x: 17, y: 14, z: 0.7}
   spawnCount: 4
   cutCount: 4

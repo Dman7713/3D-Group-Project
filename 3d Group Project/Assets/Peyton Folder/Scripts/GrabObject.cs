@@ -16,6 +16,9 @@ public class GrabObject : MonoBehaviour
     public float lerpSpeed = 10f;
     public float heldDamping = 5f; // Damping when held
 
+    private Vector3 lastPosition;
+    private Vector3 objectVelocity;
+
     private void Awake()
     {
         objectRigidBody = GetComponent<Rigidbody>();
@@ -39,9 +42,11 @@ public class GrabObject : MonoBehaviour
         Physics.IgnoreLayerCollision(pickedUpLayer, playerLayer, true);
         Physics.IgnoreLayerCollision(pickedUpLayer, grabPointLayer, true);
         Physics.IgnoreLayerCollision(pickedUpLayer, wallLayer, false); // Ensure collision with walls remains
+
+        lastPosition = transform.position; // Initialize last position for velocity tracking
     }
 
-    public void Drop(Vector3 dropPoint)
+    public void Drop()
     {
         this.objectGrabPointTransform = null;
         objectRigidBody.useGravity = true; // Re-enable gravity when dropped
@@ -52,8 +57,8 @@ public class GrabObject : MonoBehaviour
         Physics.IgnoreLayerCollision(pickedUpLayer, playerLayer, false);
         Physics.IgnoreLayerCollision(pickedUpLayer, grabPointLayer, false);
 
-        // Apply velocity to simulate throwing effect
-        objectRigidBody.linearVelocity = (dropPoint - transform.position) * 5f;
+        // Apply stored velocity from swinging motion but dampened for balance
+        objectRigidBody.linearVelocity = objectVelocity * 0.75f; // Apply reduced velocity for a natural throw effect
     }
 
     private void FixedUpdate()
@@ -64,6 +69,10 @@ public class GrabObject : MonoBehaviour
             Vector3 targetPosition = objectGrabPointTransform.position;
             Vector3 newPosition = Vector3.Lerp(transform.position, targetPosition, lerpSpeed * Time.deltaTime);
             objectRigidBody.MovePosition(newPosition); // Use MovePosition to update position using Rigidbody physics
+
+            // Calculate velocity for throw physics
+            objectVelocity = (transform.position - lastPosition) / Time.fixedDeltaTime;
+            lastPosition = transform.position;
         }
     }
 }
