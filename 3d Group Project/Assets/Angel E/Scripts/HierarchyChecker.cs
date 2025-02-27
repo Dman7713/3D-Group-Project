@@ -17,12 +17,12 @@ public class HierarchyTriggerChecker : MonoBehaviour
             if (CheckNameMatch(hierarchyNames, expectedNames))
             {
                 Debug.Log($"Object {other.gameObject.name}: Hierarchy matches expected names!");
-                Debug.Log("Hierarchy: " + hierarchyNames);
+                Debug.Log("Hierarchy: " + hierarchyNames + "Expected: " + expectedNames);
             }
             else
             {
                 Debug.Log($"Object {other.gameObject.name}: Hierarchy does NOT match expected names.");
-                Debug.Log("Hierarchy: " + hierarchyNames);
+                Debug.Log("Hierarchy: " + hierarchyNames + "Expected: " + expectedNames);
             }
         }
     }
