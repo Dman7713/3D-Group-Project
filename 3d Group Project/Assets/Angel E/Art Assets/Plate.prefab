@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8208442998408379953}
   - component: {fileID: 8892380940157772913}
   - component: {fileID: 7032955564887716220}
+  - component: {fileID: 2741191024948251542}
   m_Layer: 9
   m_Name: Plate
   m_TagString: Pickup
@@ -137,7 +138,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &7032955564887716220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,3 +153,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lerpSpeed: 10
   heldDamping: 5
+--- !u!114 &2741191024948251542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637071320524893339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bdb99ac183001240b024b0e6b800e9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shatteredPlatePrefab: {fileID: 8852373504172913526, guid: 2bd9f233fa8692f47beda3cb55494cf9, type: 3}
+  floorShatterThreshold: 0.5
+  wallShatterThreshold: 3

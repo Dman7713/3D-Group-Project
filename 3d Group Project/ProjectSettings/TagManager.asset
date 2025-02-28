@@ -12,6 +12,7 @@ TagManager:
   - Item
   - Knife
   - Burnt
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -27,8 +28,8 @@ TagManager:
   - Map
   - GrabPoint
   - Stovetop
-  - 
-  - 
+  - Floor
+  - Wall
   - 
   - 
   - 
