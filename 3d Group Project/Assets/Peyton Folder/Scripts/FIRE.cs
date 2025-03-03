@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CookMeat : MonoBehaviour
+public class FIRE : MonoBehaviour
 {
     [SerializeField] private GameObject cookedM; // Cooked burger prefab
     [SerializeField] private Vector3 spawnScale = Vector3.one;
@@ -13,6 +13,7 @@ public class CookMeat : MonoBehaviour
     private Vector3 spawnPos;
     private Quaternion spawnRot;
     private float destroyTimer = 0f;
+    private bool fireExtinguisherUsed = false; // Flag to check if fire extinguisher touched the object
 
     void Start()
     {
@@ -28,7 +29,7 @@ public class CookMeat : MonoBehaviour
 
     void Update()
     {
-        if (isCooking)
+        if (isCooking && !fireExtinguisherUsed) // Only update if it's still cooking and not extinguished
         {
             cookTime -= Time.deltaTime;
             destroyTimer += Time.deltaTime; // Track time for destruction
@@ -49,7 +50,7 @@ public class CookMeat : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Stovetop"))
+        if (other.gameObject.CompareTag("Stovetop") && !isCooking)
         {
             isCooking = true;
 
@@ -58,10 +59,19 @@ public class CookMeat : MonoBehaviour
                 sizzlingSound.Play();
             }
 
-            if (smokeEffect != null)
+            if (smokeEffect != null && !fireExtinguisherUsed) // Start smoke when cooking begins
             {
-                smokeEffect.Play(); // Start smoke when cooking begins
+                smokeEffect.Play();
             }
+
+            // Emit fire particles at the collision point(s)
+            EmitFireParticles(other);
+        }
+        else if (other.gameObject.CompareTag("FireExtinguisher"))
+        {
+            // If touched by FireExtinguisher, stop the smoke effect and cooking
+            fireExtinguisherUsed = true;
+            StopCookingAndParticles();
         }
     }
 
@@ -69,16 +79,10 @@ public class CookMeat : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Stovetop"))
         {
-            isCooking = false;
-
-            if (sizzlingSound != null)
+            // Don't stop smoke effect until the fire extinguisher is used
+            if (!fireExtinguisherUsed && smokeEffect != null)
             {
-                sizzlingSound.Stop();
-            }
-
-            if (smokeEffect != null)
-            {
-                smokeEffect.Stop(); // Stop smoke when removed from stovetop
+                smokeEffect.Play(); // Keep the smoke effect going even when it leaves the stovetop
             }
         }
     }
@@ -96,5 +100,44 @@ public class CookMeat : MonoBehaviour
         }
 
         Destroy(gameObject); // Destroy raw burger after spawning cooked burger
+    }
+
+    // Method to emit fire particles at collision points
+    private void EmitFireParticles(Collision collision)
+    {
+        if (smokeEffect != null)
+        {
+            foreach (ContactPoint contact in collision.contacts)
+            {
+                // Emit fire particles at the contact point
+                var emission = smokeEffect.emission;
+                emission.enabled = true; // Ensure emission is enabled
+
+                // Position the particle system at the contact point
+                ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams();
+                emitParams.position = contact.point; // The contact point of the collision
+                emitParams.velocity = contact.normal * 2f; // Apply a force in the collision normal direction
+
+                smokeEffect.Emit(emitParams, 1); // Emit one particle at the contact point
+            }
+        }
+    }
+
+    // Method to stop cooking and particle effects when fire extinguisher is used
+    private void StopCookingAndParticles()
+    {
+        isCooking = false;
+
+        if (sizzlingSound != null)
+        {
+            sizzlingSound.Stop();
+        }
+
+        if (smokeEffect != null)
+        {
+            smokeEffect.Stop(); // Stop smoke when the fire extinguisher is used
+        }
+
+        Debug.Log("Fire extinguished!");
     }
 }

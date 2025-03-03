@@ -18,7 +18,6 @@ GameObject:
   - component: {fileID: 6106904151480296075}
   - component: {fileID: 5989547827712076056}
   - component: {fileID: 6667140387344250637}
-  - component: {fileID: -4565276600725992787}
   m_Layer: 9
   m_Name: C.Patty
   m_TagString: Pickup
@@ -217,29 +216,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d01bc88dbbdee6b45b7335e1509accb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookedM: {fileID: 0}
-  spawnScale: {x: 1, y: 1, z: 1}
+  cookedM: {fileID: 3170390391371641555, guid: 37276484464cbc34b9734270cddcf42e, type: 3}
+  spawnScale: {x: 16.68856, y: 16.68856, z: 16.68856}
   cookTime: 5
   sizzlingSound: {fileID: 0}
   smokeEffect: {fileID: 8900186489393389516}
   destroyTime: 10
---- !u!114 &-4565276600725992787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5543512732864917865}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd33b89dd6682b04883dfa48d54a51ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLayer: Stovetop
-  stovetopLayer: Stovetop
-  timeToDestroy: 15
-  blackenStartTime: 5
-  smokeParticles: {fileID: 8900186489393389516}
 --- !u!1 &5830555904621531537
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,8 +391,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 0.3
+      scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1731,7 +1713,7 @@ ParticleSystem:
     flipU: 0
     flipV: 0
   VelocityModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
       minMaxState: 0
@@ -1788,7 +1770,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -2212,7 +2194,7 @@ ParticleSystem:
     radial:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 0.5
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -2315,7 +2297,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    inWorldSpace: 0
+    inWorldSpace: 1
   InheritVelocityModule:
     enabled: 0
     m_Mode: 0
