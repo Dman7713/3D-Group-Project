@@ -157,7 +157,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -235,10 +235,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03bd07c2ae2a474408c76ac697db9f14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPoint: {fileID: 0}
-  taskLocations: []
   despawnTime: 20
-  expectedNames: []
+  returnThreshold: 2.5
+  returnCheckInterval: 2
+  rotationSpeed: 5
+  expectedNames:
+  - B.Bun
+  - Patty
+  - Cheese
+  - C.Tomato
+  - C.Lettuce
+  - T.Bun
 --- !u!1 &7668366254044113080
 GameObject:
   m_ObjectHideFlags: 0

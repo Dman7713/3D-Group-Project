@@ -1716,7 +1716,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcPrefab: {fileID: 5005332663948764418, guid: 53a73a68b0b2d6443946bba83c8854b1, type: 3}
-  spawnPoint: {fileID: 551502731}
+  startPoint: {fileID: 551502731}
   taskLocations:
   - location: {fileID: 69719986}
     lookAtTarget: {fileID: 776221494}
@@ -1724,6 +1724,7 @@ MonoBehaviour:
     lookAtTarget: {fileID: 1130696750}
   - location: {fileID: 739650064}
     lookAtTarget: {fileID: 1581125560}
+  exitPoint: {fileID: 1402367191}
   spawnInterval: 5
 --- !u!4 &551502731
 Transform:
@@ -1734,7 +1735,7 @@ Transform:
   m_GameObject: {fileID: 551502729}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.131, y: 2.094, z: -8.612}
+  m_LocalPosition: {x: 10, y: 2.08, z: -6.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2450,6 +2451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cutV: {fileID: 2319915102901714148, guid: 932818406de22c54285134bdcdb8bc8d, type: 3}
+  burntV: {fileID: 0}
   spawnDiff: {x: 0, y: 0.5, z: 0}
   spawnScale: {x: 17, y: 14, z: 0.7}
   spawnCount: 4
@@ -3804,6 +3806,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cutV: {fileID: 2319915102901714148, guid: 932818406de22c54285134bdcdb8bc8d, type: 3}
+  burntV: {fileID: 0}
   spawnDiff: {x: 0, y: 0.5, z: 0}
   spawnScale: {x: 17, y: 14, z: 0.7}
   spawnCount: 4
@@ -5109,6 +5112,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1399842607}
   m_Mesh: {fileID: 4493585093827132993, guid: 2c008d20ef5d393449973aeb0bd96226, type: 3}
+--- !u!1 &1402367190
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1402367191}
+  m_Layer: 0
+  m_Name: NPCDestroyer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1402367191
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402367190}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 10, y: 2.08, z: -12}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1421500663
 GameObject:
   m_ObjectHideFlags: 0
@@ -7167,6 +7201,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cutV: {fileID: 4702839685255490909, guid: 4bec9b316c4e95d4f908b93ec5370020, type: 3}
+  burntV: {fileID: 0}
   spawnDiff: {x: 0, y: 0.5, z: 0}
   spawnScale: {x: 18, y: 18, z: 18}
   spawnCount: 5
@@ -13502,6 +13537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cutV: {fileID: 2319915102901714148, guid: 932818406de22c54285134bdcdb8bc8d, type: 3}
+  burntV: {fileID: 0}
   spawnDiff: {x: 0, y: 0.5, z: 0}
   spawnScale: {x: 17, y: 14, z: 0.7}
   spawnCount: 4
@@ -24406,6 +24442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cutV: {fileID: 4702839685255490909, guid: 4bec9b316c4e95d4f908b93ec5370020, type: 3}
+  burntV: {fileID: 0}
   spawnDiff: {x: 0, y: 0.5, z: 0}
   spawnScale: {x: 18, y: 18, z: 18}
   spawnCount: 5
@@ -30122,6 +30159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cutV: {fileID: 4702839685255490909, guid: 4bec9b316c4e95d4f908b93ec5370020, type: 3}
+  burntV: {fileID: 0}
   spawnDiff: {x: 0, y: 0.5, z: 0}
   spawnScale: {x: 18, y: 18, z: 18}
   spawnCount: 5
@@ -32100,4 +32138,5 @@ SceneRoots:
   - {fileID: 1130696750}
   - {fileID: 1581125560}
   - {fileID: 551502731}
+  - {fileID: 1402367191}
   - {fileID: 1173353085}
