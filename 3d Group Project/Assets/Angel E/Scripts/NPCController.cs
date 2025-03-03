@@ -5,35 +5,47 @@ using UnityEngine.AI;
 
 public class NPCController : MonoBehaviour
 {
-    public Transform startPoint; // The spawn location
-    public List<TaskLocation> taskLocations; // List of destinations (includes look-at objects)
-    [SerializeField] public float despawnTime = 5f; // Countdown duration
-
     private NavMeshAgent agent;
+    private Transform exitPoint;
     private TaskLocation targetTask;
-    private static HashSet<Transform> occupiedLocations = new HashSet<Transform>();
-    private bool isSatisfied = false;
     private bool taskStarted = false;
+    private bool movingToExit = false;
 
-    [SerializeField] private List<string> expectedNames = new List<string>(); // Expected hierarchy names
+    [SerializeField] public float despawnTime = 5f;
+    [SerializeField] private float returnThreshold = 2.5f;
+    [SerializeField] private float returnCheckInterval = 1.5f;
+    [SerializeField] private float rotationSpeed = 5f;
+
+    private static HashSet<Transform> occupiedLocations = new HashSet<Transform>();
+
+    [SerializeField] private List<string> expectedNames = new List<string>(); // List of required objects
+    private HashSet<string> objectsInTrigger = new HashSet<string>(); // Track objects inside the trigger
+    public bool isSatisfied { get; private set; } = false; // True when all expected objects are in
 
     [System.Serializable]
     public class TaskLocation
     {
-        public Transform location; // Where the NPC moves
-        public Transform lookAtTarget; // What the NPC should face
+        public Transform location;
+        public Transform lookAtTarget;
     }
 
-    void Start()
+    public void Start()
+    {
+        BoxCollider boxCheck = GetComponent<BoxCollider>();
+        boxCheck.enabled = false;
+    }
+    public void InitializeNPC(List<TaskLocation> taskLocations, Transform exit)
     {
         agent = GetComponent<NavMeshAgent>();
+        exitPoint = exit;
 
-        // Choose a random unoccupied location
-        targetTask = GetAvailableLocation();
+        // Select a task location
+        targetTask = GetAvailableLocation(taskLocations);
         if (targetTask != null)
         {
             occupiedLocations.Add(targetTask.location);
             agent.SetDestination(targetTask.location.position);
+            StartCoroutine(CheckDisplacement());
         }
         else
         {
@@ -42,35 +54,69 @@ public class NPCController : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
-        // Check if the NPC has reached the destination and hasn't started the task yet
         if (!taskStarted && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
             taskStarted = true;
-            agent.isStopped = true; // Stop movement
+            agent.isStopped = true;
 
-            // Make the NPC face the correct direction
             if (targetTask.lookAtTarget != null)
             {
-                Vector3 direction = (targetTask.lookAtTarget.position - transform.position).normalized;
-                Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-                transform.rotation = lookRotation;
+                StartCoroutine(TurnToTarget(targetTask.lookAtTarget));
             }
 
-            StartCoroutine(CompleteTaskAndDespawn());
+            StartCoroutine(CompleteTaskAndMoveToExit());
         }
     }
 
-    private TaskLocation GetAvailableLocation()
+    private IEnumerator TurnToTarget(Transform lookAtTarget)
+    {
+        Debug.Log("NPC turning to face: " + lookAtTarget.name);
+
+        while (true)
+        {
+            Vector3 direction = (lookAtTarget.position - transform.position).normalized;
+            direction.y = 0; // Keep NPC upright
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+
+            if (Quaternion.Angle(transform.rotation, lookRotation) < 1f)
+            {
+                Debug.Log("NPC finished turning to " + lookAtTarget.name);
+                break;
+            }
+            yield return null;
+        }
+    }
+
+    private IEnumerator CheckDisplacement()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(returnCheckInterval);
+
+            if (!movingToExit && targetTask != null && Vector3.Distance(transform.position, targetTask.location.position) > returnThreshold)
+            {
+                if (!agent.enabled)
+                {
+                    agent.enabled = true;
+                }
+                Debug.Log("NPC was moved! Returning to task location.");
+                agent.SetDestination(targetTask.location.position);
+            }
+        }
+    }
+
+    private TaskLocation GetAvailableLocation(List<TaskLocation> taskLocations)
     {
         List<TaskLocation> availableLocations = new List<TaskLocation>();
 
-        foreach (TaskLocation task in taskLocations)
+        foreach (TaskLocation location in taskLocations)
         {
-            if (!occupiedLocations.Contains(task.location))
+            if (!occupiedLocations.Contains(location.location))
             {
-                availableLocations.Add(task);
+                availableLocations.Add(location);
             }
         }
 
@@ -81,84 +127,67 @@ public class NPCController : MonoBehaviour
         return null;
     }
 
-    private IEnumerator CompleteTaskAndDespawn()
+    private IEnumerator CompleteTaskAndMoveToExit()
     {
+        BoxCollider boxCheck = GetComponent<BoxCollider>();
+        boxCheck.enabled = true;
         float timeRemaining = despawnTime;
-
-        Debug.Log("NPC has arrived at " + targetTask.location.name + ". Starting task countdown.");
+        Debug.Log("NPC at " + targetTask.location.name + ". Starting task.");
 
         while (!isSatisfied && timeRemaining > 0)
         {
-            Debug.Log("Time Remaining: " + Mathf.Ceil(timeRemaining));
             yield return new WaitForSeconds(1f);
             timeRemaining -= 1f;
         }
 
-        Debug.Log("Task completed at " + targetTask.location.name + "! NPC despawning...");
-
-        // Free up the location
+        Debug.Log("NPC finished task. Moving to exit.");
+        boxCheck.enabled = false;
         occupiedLocations.Remove(targetTask.location);
+        movingToExit = true;
+        agent.isStopped = false;
+        agent.SetDestination(exitPoint.position);
 
-        // Despawn NPC
+        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
+        {
+            yield return null;
+        }
+
+        Debug.Log("NPC reached exit. Despawning.");
         Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name == "Plate")
+        // Only track objects whose name contains any of the expected names (ignoring suffixes like "(Clone)")
+        foreach (string expectedName in expectedNames)
         {
-            if (other.gameObject == null) return;
-
-            List<string> hierarchyNames = new List<string>();
-            CollectNames(other.gameObject, hierarchyNames);
-
-            if (CheckNameMatch(hierarchyNames, expectedNames))
+            if (other.gameObject.name.Contains(expectedName))
             {
-                isSatisfied = true;
-                Debug.Log($"Object {other.gameObject.name}: Hierarchy matches expected names!");
-            }
-            else
-            {
-                Debug.Log($"Object {other.gameObject.name}: Hierarchy does NOT match expected names.");
+                objectsInTrigger.Add(expectedName); // Add only the base expected name
+                CheckIfSatisfied();
+                break; // Stop checking once we find a match
             }
         }
     }
 
-    void CollectNames(GameObject obj, List<string> nameList)
+    private void OnTriggerExit(Collider other)
     {
-        while (obj != null)
+        // Only remove objects whose name contains any of the expected names
+        foreach (string expectedName in expectedNames)
         {
-            if (obj.name != "Smoke") // Ignore "Smoke"
+            if (other.gameObject.name.Contains(expectedName))
             {
-                nameList.Add(obj.name);
+                objectsInTrigger.Remove(expectedName); // Remove base expected name
+                CheckIfSatisfied();
+                break; // Stop checking once we find a match
             }
-            obj = GetValidChild(obj);
         }
     }
 
-    GameObject GetValidChild(GameObject parent)
+    private void CheckIfSatisfied()
     {
-        foreach (Transform child in parent.transform)
-        {
-            if (child.gameObject.name != "Smoke")
-            {
-                return child.gameObject;
-            }
-        }
-        return null;
-    }
-
-    bool CheckNameMatch(List<string> hierarchy, List<string> expected)
-    {
-        if (hierarchy.Count != expected.Count) return false;
-
-        for (int i = 0; i < hierarchy.Count; i++)
-        {
-            if (hierarchy[i] != expected[i])
-            {
-                return false;
-            }
-        }
-        return true;
+        // Set isSatisfied to true if all expected objects are inside the trigger
+        isSatisfied = objectsInTrigger.Count == expectedNames.Count;
+        Debug.Log($"isSatisfied: {isSatisfied}");
     }
 }
