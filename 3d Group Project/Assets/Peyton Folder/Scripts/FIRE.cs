@@ -9,6 +9,8 @@ public class FIRE : MonoBehaviour
     [SerializeField] private ParticleSystem smokeEffect; // Smoke particle system
     [SerializeField] private float destroyTime = 10f; // Time before raw meat is destroyed after cooking starts
 
+    private AudioSource fireAlarmAudioSource; // To store the FireAlarm's AudioSource
+
     private bool isCooking = false;
     private Vector3 spawnPos;
     private Quaternion spawnRot;
@@ -17,6 +19,17 @@ public class FIRE : MonoBehaviour
 
     void Start()
     {
+        // Find the FireAlarm object in the hierarchy and get its AudioSource
+        GameObject fireAlarm = GameObject.Find("FireAlarm");
+        if (fireAlarm != null)
+        {
+            fireAlarmAudioSource = fireAlarm.GetComponent<AudioSource>();
+        }
+        else
+        {
+            Debug.LogWarning("FireAlarm object not found in the hierarchy.");
+        }
+
         // Store the initial position and rotation when the raw burger is created
         spawnPos = transform.position;
         spawnRot = transform.rotation;
@@ -44,6 +57,15 @@ public class FIRE : MonoBehaviour
             {
                 Destroy(gameObject); // Destroys the object
                 Debug.Log("Raw meat destroyed due to time limit.");
+            }
+        }
+
+        // Check if smokeEffect is playing and trigger external sound if it is
+        if (smokeEffect != null && smokeEffect.isPlaying && fireAlarmAudioSource != null)
+        {
+            if (!fireAlarmAudioSource.isPlaying) // Play the sound only if it's not already playing
+            {
+                fireAlarmAudioSource.Play();
             }
         }
     }
