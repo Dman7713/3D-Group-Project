@@ -1,69 +1,80 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
-public class HierarchyTriggerChecker : MonoBehaviour
+public class TriggerSetChecker : MonoBehaviour
 {
-    [SerializeField] private List<string> expectedNames = new List<string>(); // Expected hierarchy names
+    [SerializeField] private List<List<string>> possibleLists = new List<List<string>>(); // Multiple lists of expected objects
+    private List<string> activeList = new List<string>(); // The chosen list of expected objects
+    private HashSet<string> objectsInTrigger = new HashSet<string>(); // Track objects inside the trigger
+    public bool isSatisfied { get; private set; } = false; // True when all expected objects are in
+
+    private void Start()
+    {
+        // Select a random list from possibleLists
+        if (possibleLists.Count > 0)
+        {
+            int randomIndex = Random.Range(0, possibleLists.Count);
+            activeList = new List<string>(possibleLists[randomIndex]);
+            Debug.Log($"Selected list {randomIndex + 1}: [{string.Join(", ", activeList)}]");
+        }
+        else
+        {
+            Debug.LogWarning("No lists available! Ensure possibleLists has entries.");
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name == "Plate")
+        string objectName = other.gameObject.name;
+        bool matched = false;
+
+        foreach (string expectedName in activeList)
         {
-            if (other.gameObject == null) return;
+            bool doesMatch = NameMatches(objectName, expectedName);
+            Debug.Log($"Does '{objectName}' match '{expectedName}'? → {doesMatch}");
 
-            List<string> hierarchyNames = new List<string>();
-            CollectNames(other.gameObject, hierarchyNames);
-
-            if (CheckNameMatch(hierarchyNames, expectedNames))
+            if (doesMatch)
             {
-                Debug.Log($"Object {other.gameObject.name}: Hierarchy matches expected names!");
-                Debug.Log("Hierarchy: " + hierarchyNames + "Expected: " + expectedNames);
-            }
-            else
-            {
-                Debug.Log($"Object {other.gameObject.name}: Hierarchy does NOT match expected names.");
-                Debug.Log("Hierarchy: " + hierarchyNames + "Expected: " + expectedNames);
+                objectsInTrigger.Add(expectedName);
+                matched = true;
+                break;
             }
         }
+
+        if (matched) CheckIfSatisfied();
     }
 
-    void CollectNames(GameObject obj, List<string> nameList)
+    private void OnTriggerExit(Collider other)
     {
-        while (obj != null)
-        {
-            if (obj.name != "Smoke") // Skip objects named "Smoke"
-            {
-                nameList.Add(obj.name);
-            }
+        string objectName = other.gameObject.name;
+        bool matched = false;
 
-            // Find the next child that is NOT named "Smoke"
-            obj = GetValidChild(obj);
+        foreach (string expectedName in activeList)
+        {
+            bool doesMatch = NameMatches(objectName, expectedName);
+            Debug.Log($"Does '{objectName}' match '{expectedName}'? → {doesMatch}");
+
+            if (doesMatch)
+            {
+                objectsInTrigger.Remove(expectedName);
+                matched = true;
+                break;
+            }
         }
+
+        if (matched) CheckIfSatisfied();
     }
 
-    GameObject GetValidChild(GameObject parent)
+    private void CheckIfSatisfied()
     {
-        foreach (Transform child in parent.transform)
-        {
-            if (child.gameObject.name != "Smoke") // Ignore "Smoke"
-            {
-                return child.gameObject;
-            }
-        }
-        return null; // No valid child found
+        isSatisfied = objectsInTrigger.Count == activeList.Count;
+        Debug.Log($"isSatisfied: {isSatisfied}");
     }
 
-    bool CheckNameMatch(List<string> hierarchy, List<string> expected)
+    private bool NameMatches(string objectName, string expectedName)
     {
-        if (hierarchy.Count != expected.Count) return false;
-
-        for (int i = 0; i < hierarchy.Count; i++)
-        {
-            if (hierarchy[i] != expected[i])
-            {
-                return false;
-            }
-        }
-        return true;
+        string pattern = $@"(^|\s|_){Regex.Escape(expectedName)}(\s|_|$|Clone)";
+        return Regex.IsMatch(objectName, pattern);
     }
 }
