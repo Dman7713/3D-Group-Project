@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 1039822103073082320}
   - component: {fileID: 5109492202265689499}
   - component: {fileID: 8470960457539658303}
-  - component: {fileID: 7985985087093481135}
   m_Layer: 9
   m_Name: R.Lettuce
   m_TagString: Food
@@ -187,29 +186,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d01bc88dbbdee6b45b7335e1509accb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookedM: {fileID: 0}
+  cookedM: {fileID: 8748112526394670777, guid: 9582692472f3e7c4490d93056abe1603, type: 3}
   spawnScale: {x: 1, y: 1, z: 1}
   cookTime: 5
   sizzlingSound: {fileID: 0}
   smokeEffect: {fileID: 3820031563461707592}
   destroyTime: 10
---- !u!114 &7985985087093481135
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4707096444775309243}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd33b89dd6682b04883dfa48d54a51ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLayer: Stovetop
-  stovetopLayer: Stovetop
-  timeToDestroy: 15
-  blackenStartTime: 5
-  smokeParticles: {fileID: 3820031563461707592}
 --- !u!1 &7239033565676045770
 GameObject:
   m_ObjectHideFlags: 0

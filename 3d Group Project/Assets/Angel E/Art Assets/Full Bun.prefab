@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5677804049146190047}
   - component: {fileID: 2842224628832473058}
   - component: {fileID: 3445591232576271165}
-  - component: {fileID: 6436586327429636094}
   - component: {fileID: 3059345363374888270}
   - component: {fileID: 6803634814037426764}
   - component: {fileID: 9008591124626391982}
@@ -94,23 +93,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6436586327429636094
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2242410956154667440}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd33b89dd6682b04883dfa48d54a51ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLayer: Stovetop
-  stovetopLayer: Stovetop
-  timeToDestroy: 15
-  blackenStartTime: 5
-  smokeParticles: {fileID: 7576134621395882647}
 --- !u!54 &3059345363374888270
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -186,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d01bc88dbbdee6b45b7335e1509accb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookedM: {fileID: 0}
+  cookedM: {fileID: 7090856485229368931, guid: c40ccea5c345e4040a0ba272e06df30b, type: 3}
   spawnScale: {x: 1, y: 1, z: 1}
   cookTime: 5
   sizzlingSound: {fileID: 0}
