@@ -1,7 +1,14 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.AI;
+
+[System.Serializable]
+public class ObjectList
+{
+    public List<string> objects; // A single list of expected objects
+}
 
 public class NPCController : MonoBehaviour
 {
@@ -18,9 +25,13 @@ public class NPCController : MonoBehaviour
 
     private static HashSet<Transform> occupiedLocations = new HashSet<Transform>();
 
-    [SerializeField] private List<string> expectedNames = new List<string>(); // List of required objects
+    [SerializeField] private List<ObjectList> possibleLists = new List<ObjectList>(); // Multiple lists stored properly
+    private List<string> activeList = new List<string>(); // The chosen list for checking
     private HashSet<string> objectsInTrigger = new HashSet<string>(); // Track objects inside the trigger
-    public bool isSatisfied { get; private set; } = false; // True when all expected objects are in
+    public bool isSatisfied { get; private set; } = false; // True when all expected objects are inside
+
+
+
 
     [System.Serializable]
     public class TaskLocation
@@ -33,6 +44,18 @@ public class NPCController : MonoBehaviour
     {
         BoxCollider boxCheck = GetComponent<BoxCollider>();
         boxCheck.enabled = false;
+
+        // Select a random list from possibleLists
+        if (possibleLists.Count > 0)
+        {
+            int randomIndex = Random.Range(0, possibleLists.Count);
+            activeList = new List<string>(possibleLists[randomIndex].objects);
+            Debug.Log($"Selected list {randomIndex + 1}: [{string.Join(", ", activeList)}]");
+        }
+        else
+        {
+            Debug.LogWarning("No lists available! Ensure possibleLists has entries.");
+        }
     }
     public void InitializeNPC(List<TaskLocation> taskLocations, Transform exit)
     {
@@ -140,7 +163,14 @@ public class NPCController : MonoBehaviour
             timeRemaining -= 1f;
         }
 
-        Debug.Log("NPC finished task. Moving to exit.");
+        if (isSatisfied == true)
+        {
+            Debug.Log("NPC finished task. Moving to exit.");
+        }
+        else
+        {
+            Debug.Log("NPC lacks time. Moving to exit.");
+        }
         boxCheck.enabled = false;
         occupiedLocations.Remove(targetTask.location);
         movingToExit = true;
@@ -158,36 +188,55 @@ public class NPCController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Only track objects whose name contains any of the expected names (ignoring suffixes like "(Clone)")
-        foreach (string expectedName in expectedNames)
+        string objectName = other.gameObject.name;
+        bool matched = false;
+
+        foreach (string expectedName in activeList)
         {
-            if (other.gameObject.name.Contains(expectedName))
+            bool doesMatch = NameMatches(objectName, expectedName);
+            Debug.Log($"Does '{objectName}' match '{expectedName}'? → {doesMatch}");
+
+            if (doesMatch)
             {
-                objectsInTrigger.Add(expectedName); // Add only the base expected name
-                CheckIfSatisfied();
-                break; // Stop checking once we find a match
+                objectsInTrigger.Add(expectedName);
+                matched = true;
+                break;
             }
         }
+
+        if (matched) CheckIfSatisfied();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        // Only remove objects whose name contains any of the expected names
-        foreach (string expectedName in expectedNames)
+        string objectName = other.gameObject.name;
+        bool matched = false;
+
+        foreach (string expectedName in activeList)
         {
-            if (other.gameObject.name.Contains(expectedName))
+            bool doesMatch = NameMatches(objectName, expectedName);
+            Debug.Log($"Does '{objectName}' match '{expectedName}'? → {doesMatch}");
+
+            if (doesMatch)
             {
-                objectsInTrigger.Remove(expectedName); // Remove base expected name
-                CheckIfSatisfied();
-                break; // Stop checking once we find a match
+                objectsInTrigger.Remove(expectedName);
+                matched = true;
+                break;
             }
         }
+
+        if (matched) CheckIfSatisfied();
     }
 
     private void CheckIfSatisfied()
     {
-        // Set isSatisfied to true if all expected objects are inside the trigger
-        isSatisfied = objectsInTrigger.Count == expectedNames.Count;
+        isSatisfied = objectsInTrigger.Count == activeList.Count;
         Debug.Log($"isSatisfied: {isSatisfied}");
+    }
+
+    private bool NameMatches(string objectName, string expectedName)
+    {
+        string pattern = $@"(^|\s|_){Regex.Escape(expectedName)}(\s|_|$|Clone)";
+        return Regex.IsMatch(objectName, pattern);
     }
 }
