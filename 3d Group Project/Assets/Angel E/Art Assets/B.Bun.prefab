@@ -4848,7 +4848,6 @@ GameObject:
   - component: {fileID: 6873488866045488414}
   - component: {fileID: 831259947671183739}
   - component: {fileID: 1050957394366353018}
-  - component: {fileID: 1011639058083406527}
   m_Layer: 9
   m_Name: B.Bun
   m_TagString: Food
@@ -5000,26 +4999,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d01bc88dbbdee6b45b7335e1509accb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cookedM: {fileID: 0}
-  spawnScale: {x: 1, y: 1, z: 1}
+  cookedM: {fileID: 1304411239623025141, guid: c73253e79db53c445b6876aa066d3208, type: 3}
+  spawnScale: {x: 15.88734, y: 15.88734, z: 15.88734}
   cookTime: 5
   sizzlingSound: {fileID: 0}
   smokeEffect: {fileID: 6172382279323135149}
   destroyTime: 10
---- !u!114 &1011639058083406527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1457483139994174549}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd33b89dd6682b04883dfa48d54a51ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLayer: Stovetop
-  stovetopLayer: Stovetop
-  timeToDestroy: 15
-  blackenStartTime: 5
-  smokeParticles: {fileID: 6172382279323135149}

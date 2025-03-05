@@ -13,6 +13,7 @@ public class CookMeat : MonoBehaviour
     private Vector3 spawnPos;
     private Quaternion spawnRot;
     private float destroyTimer = 0f;
+    private PlaySoundOnCollision3D stoveSoundScript; // Reference to the sound script
 
     void Start()
     {
@@ -62,6 +63,9 @@ public class CookMeat : MonoBehaviour
             {
                 smokeEffect.Play(); // Start smoke when cooking begins
             }
+
+            // Find the sound script on the stovetop
+            stoveSoundScript = other.gameObject.GetComponent<PlaySoundOnCollision3D>();
         }
     }
 
@@ -93,6 +97,12 @@ public class CookMeat : MonoBehaviour
         if (smokeEffect != null)
         {
             smokeEffect.Stop(); // Stop smoke when meat is fully cooked
+        }
+
+        // Reset stove sound script to prevent lingering sound issues
+        if (stoveSoundScript != null)
+        {
+            stoveSoundScript.ResetCollision();
         }
 
         Destroy(gameObject); // Destroy raw burger after spawning cooked burger

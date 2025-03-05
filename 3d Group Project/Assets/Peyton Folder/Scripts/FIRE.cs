@@ -67,6 +67,16 @@ public class FIRE : MonoBehaviour
             {
                 fireAlarmAudioSource.Play();
             }
+
+            // Play sizzling sound when smoke particles are playing
+            if (!sizzlingSound.isPlaying)
+            {
+                sizzlingSound.Play();
+            }
+        }
+        else if (sizzlingSound.isPlaying) // Stop sizzling sound when smoke particles are not playing
+        {
+            sizzlingSound.Stop();
         }
     }
 
@@ -76,7 +86,7 @@ public class FIRE : MonoBehaviour
         {
             isCooking = true;
 
-            if (sizzlingSound != null)
+            if (sizzlingSound != null && !sizzlingSound.isPlaying)
             {
                 sizzlingSound.Play();
             }

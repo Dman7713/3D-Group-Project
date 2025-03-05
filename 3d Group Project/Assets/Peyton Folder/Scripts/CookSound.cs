@@ -7,7 +7,7 @@ public class PlaySoundOnCollision3D : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Food") || collision.gameObject.CompareTag("Burnt") || collision.gameObject.CompareTag("Cuttable"))
+        if (IsValidTag(collision.gameObject))
         {
             Debug.Log("Collision with: " + collision.gameObject.name); // Debugging
             collisionCount++; // Increase collision count
@@ -21,16 +21,33 @@ public class PlaySoundOnCollision3D : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Food") || collision.gameObject.CompareTag("Burnt") || collision.gameObject.CompareTag("Cuttable"))
+        if (IsValidTag(collision.gameObject))
         {
             collisionCount--; // Decrease collision count
 
-            // Only stop if no objects remain
             if (collisionCount <= 0)
             {
-                audioSource.Stop();
-                collisionCount = 0; // Ensure it doesn’t go negative
+                StopSound();
             }
         }
+    }
+
+    // Call this when the food is replaced to avoid sound issues
+    public void ResetCollision()
+    {
+        Debug.Log("Food replaced, resetting collision count.");
+        collisionCount = 0;
+        audioSource.Stop();
+    }
+
+    private bool IsValidTag(GameObject obj)
+    {
+        return obj.CompareTag("Food") || obj.CompareTag("Burnt") || obj.CompareTag("Cuttable");
+    }
+
+    private void StopSound()
+    {
+        audioSource.Stop();
+        collisionCount = 0; // Ensure count resets
     }
 }
