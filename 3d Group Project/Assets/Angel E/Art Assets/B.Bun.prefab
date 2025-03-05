@@ -4851,7 +4851,7 @@ GameObject:
   - component: {fileID: 1011639058083406527}
   m_Layer: 9
   m_Name: B.Bun
-  m_TagString: Item
+  m_TagString: Food
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

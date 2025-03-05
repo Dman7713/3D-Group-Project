@@ -15,6 +15,7 @@ TagManager:
   - Wall
   - Food
   - fireextinguisher
+  - Cuttable
   layers:
   - Default
   - TransparentFX

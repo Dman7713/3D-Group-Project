@@ -25,11 +25,18 @@ public class CutBurgerBun : MonoBehaviour
     [SerializeField]
     Vector3 scaleDecrease;
 
+    [SerializeField]
+    AudioClip cutSound; // Audio clip for the cut sound
+    AudioSource audioSource; // AudioSource to play the sound
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         spawnRot = Quaternion.identity;
         transform.localScale = spawnScale; // Make sure the bun starts with the correct scale
+
+        // Get the AudioSource component
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -44,6 +51,12 @@ public class CutBurgerBun : MonoBehaviour
         {
             cutCount -= 1;
             transform.localScale -= scaleDecrease;
+
+            // Play the cut sound when the object is cut
+            if (audioSource && cutSound)
+            {
+                audioSource.PlayOneShot(cutSound);
+            }
 
             // Check if the object is tagged as "Burnt"
             if (CompareTag("Burnt"))
