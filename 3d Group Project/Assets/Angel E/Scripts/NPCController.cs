@@ -7,7 +7,8 @@ using UnityEngine.AI;
 [System.Serializable]
 public class ObjectList
 {
-    public List<string> objects; // A single list of expected objects
+    public List<string> objects; // List of expected objects
+    public int pointValue; // Point value for this list
 }
 
 public class NPCController : MonoBehaviour
@@ -23,14 +24,16 @@ public class NPCController : MonoBehaviour
     [SerializeField] private float returnCheckInterval = 1.5f;
     [SerializeField] private float rotationSpeed = 5f;
 
+    [SerializeField] private string plateObj;
+
     private static HashSet<Transform> occupiedLocations = new HashSet<Transform>();
 
-    [SerializeField] private List<ObjectList> possibleLists = new List<ObjectList>(); // Multiple lists stored properly
+    [SerializeField] private List<ObjectList> possibleLists = new List<ObjectList>(); // Multiple lists of expected objects
     private List<string> activeList = new List<string>(); // The chosen list for checking
-    private HashSet<string> objectsInTrigger = new HashSet<string>(); // Track objects inside the trigger
+    private int activePointValue = 0; // Points associated with the chosen list
+    private HashSet<GameObject> objectsInTrigger = new HashSet<GameObject>(); // Track objects inside the trigger
     public bool isSatisfied { get; private set; } = false; // True when all expected objects are inside
-
-
+    public int totalScore { get; private set; } = 0; // Keeps track of cumulative score
 
 
     [System.Serializable]
@@ -50,17 +53,33 @@ public class NPCController : MonoBehaviour
         {
             int randomIndex = Random.Range(0, possibleLists.Count);
             activeList = new List<string>(possibleLists[randomIndex].objects);
-            Debug.Log($"Selected list {randomIndex + 1}: [{string.Join(", ", activeList)}]");
+            activePointValue = possibleLists[randomIndex].pointValue;
+            Debug.Log($"Selected list {randomIndex + 1}: [{string.Join(", ", activeList)}] | Points: {activePointValue}");
         }
         else
         {
             Debug.LogWarning("No lists available! Ensure possibleLists has entries.");
         }
     }
+
     public void InitializeNPC(List<TaskLocation> taskLocations, Transform exit)
     {
         agent = GetComponent<NavMeshAgent>();
         exitPoint = exit;
+
+        // Ensure the agent is enabled
+        if (!agent.enabled)
+        {
+            agent.enabled = true;
+        }
+
+        // Make sure the agent is placed on the NavMesh
+        if (!NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1f, NavMesh.AllAreas))
+        {
+            Debug.LogError("NPC not placed on NavMesh at the start!");
+            return;
+        }
+        agent.Warp(hit.position); // Ensure the NPC is placed on a valid position on the NavMesh
 
         // Select a task location
         targetTask = GetAvailableLocation(taskLocations);
@@ -169,7 +188,7 @@ public class NPCController : MonoBehaviour
         }
         else
         {
-            Debug.Log("NPC lacks time. Moving to exit.");
+            Debug.Log("NPC timeout. Moving to exit.");
         }
         boxCheck.enabled = false;
         occupiedLocations.Remove(targetTask.location);
@@ -198,7 +217,7 @@ public class NPCController : MonoBehaviour
 
             if (doesMatch)
             {
-                objectsInTrigger.Add(expectedName);
+                objectsInTrigger.Add(other.gameObject);
                 matched = true;
                 break;
             }
@@ -219,7 +238,7 @@ public class NPCController : MonoBehaviour
 
             if (doesMatch)
             {
-                objectsInTrigger.Remove(expectedName);
+                objectsInTrigger.Remove(other.gameObject);
                 matched = true;
                 break;
             }
@@ -230,8 +249,83 @@ public class NPCController : MonoBehaviour
 
     private void CheckIfSatisfied()
     {
-        isSatisfied = objectsInTrigger.Count == activeList.Count;
-        Debug.Log($"isSatisfied: {isSatisfied}");
+        // Ensure all expected objects are in the trigger
+        foreach (string expectedName in activeList)
+        {
+            bool found = false;
+
+            foreach (GameObject obj in objectsInTrigger)
+            {
+                if (NameMatches(obj.name, expectedName))
+                {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                Debug.LogWarning("❌ Check canceled: Missing an expected object!");
+                return; // Stop the check immediately if any expected object is missing
+            }
+        }
+
+        // Ensure NO extra objects are present and that no invalid objects are in the trigger
+        foreach (GameObject obj in objectsInTrigger)
+        {
+            bool isValid = false;
+
+            foreach (string expectedName in activeList)
+            {
+                if (NameMatches(obj.name, expectedName))
+                {
+                    isValid = true;
+                    break;
+                }
+            }
+
+            if (!isValid)
+            {
+                Debug.LogWarning($"❌ Check canceled: Extra object '{obj.name}' detected! It's not in the active list.");
+                return; // Stop the check if any object is not in the active list
+            }
+        }
+
+        // Ensure the number of objects in the trigger matches the active list
+        if (objectsInTrigger.Count != activeList.Count)
+        {
+            Debug.LogWarning("❌ Check canceled: The number of objects does not match the expected count!");
+            return; // Stop the check if the counts don't match
+        }
+
+        // If we pass both checks, set isSatisfied to true
+        isSatisfied = true;
+
+        if (isSatisfied)
+        {
+            MoneyCounter.Instance.AddScore(activePointValue);
+            Debug.Log($"✅ Check Complete! Awarded {activePointValue} points.");
+            DestroyObjects();
+        }
+    }
+
+    private void DestroyObjects()
+    {
+        // Destroy only objects that were inside the trigger
+        foreach (GameObject obj in objectsInTrigger)
+        {
+            Destroy(obj);
+        }
+
+        objectsInTrigger.Clear();
+
+        // Find and destroy "Broke Plate" if it exists
+        GameObject brokePlate = GameObject.Find("Broke Plate");
+        if (brokePlate != null)
+        {
+            Destroy(brokePlate);
+            Debug.Log("🛠️ 'Broke Plate' has been destroyed.");
+        }
     }
 
     private bool NameMatches(string objectName, string expectedName)
@@ -240,3 +334,11 @@ public class NPCController : MonoBehaviour
         return Regex.IsMatch(objectName, pattern);
     }
 }
+
+
+// B.Bun = 1
+// C.Patty = 1
+// Cheese = 1
+// C.Tomato = 1
+// C.Lettuce = 1
+// T.Bun = 1

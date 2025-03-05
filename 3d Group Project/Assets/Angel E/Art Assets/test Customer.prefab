@@ -185,8 +185,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.9676409, y: 1.2691293, z: 2.6027913}
-  m_Center: {x: 0.0010447502, y: 0.46464694, z: 1.6688931}
+  m_Size: {x: 0.9676409, y: 1.2691293, z: 1.6455178}
+  m_Center: {x: 0.0010447502, y: 0.46464694, z: 1.1902564}
 --- !u!195 &2556700201027738027
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -225,28 +225,16 @@ MonoBehaviour:
   returnThreshold: 2.5
   returnCheckInterval: 1.5
   rotationSpeed: 5
+  plateObj: Broke Plate
   possibleLists:
   - objects:
     - B.Bun
     - C.Patty
     - Cheese
-    - T.Bun
-  - objects:
-    - B.Bun
-    - C.Patty
-    - Cheese
-    - C.Patty
-    - Cheese
     - C.Tomato
     - C.Lettuce
     - T.Bun
-  - objects:
-    - B.Bun
-    - C.Patty
-    - Cheese
-    - C.Tomato
-    - C.Lettuce
-    - T.Bun
+    pointValue: 4
 --- !u!1 &7668366254044113080
 GameObject:
   m_ObjectHideFlags: 0
