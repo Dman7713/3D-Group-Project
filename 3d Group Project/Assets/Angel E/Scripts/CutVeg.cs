@@ -19,6 +19,8 @@ public class CutVeg : MonoBehaviour
     [SerializeField]
     Vector3 scaleDecrease;
 
+    private AudioSource knifeAudioSource; // AudioSource for the cutting sound on the knife
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -34,8 +36,18 @@ public class CutVeg : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        // Check if the object collides with the knife
         if (collision.collider.tag == "Knife")
         {
+            // Get the AudioSource from the Knife object that collided with this item
+            knifeAudioSource = collision.collider.GetComponent<AudioSource>();
+
+            // If the Knife object has an AudioSource component, play the sound
+            if (knifeAudioSource != null)
+            {
+                knifeAudioSource.Play();
+            }
+
             cutCount -= 1;
             transform.localScale -= scaleDecrease;
 

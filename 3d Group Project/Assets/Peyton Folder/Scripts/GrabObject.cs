@@ -19,6 +19,10 @@ public class GrabObject : MonoBehaviour
     private Vector3 lastPosition;
     private Vector3 objectVelocity;
 
+    // Reference to the HoldPoint object (will be found dynamically)
+    private Transform holdPointTransform;
+    private AudioSource audioSource;
+
     private void Awake()
     {
         objectRigidBody = GetComponent<Rigidbody>();
@@ -29,6 +33,19 @@ public class GrabObject : MonoBehaviour
         playerLayer = LayerMask.NameToLayer("Player");
         grabPointLayer = LayerMask.NameToLayer("GrabPoint");
         wallLayer = LayerMask.NameToLayer("Wall");
+
+        // Find the HoldPoint object dynamically in the hierarchy
+        holdPointTransform = GameObject.Find("HoldPoint")?.transform;
+
+        // Check if HoldPoint was found and assign the AudioSource
+        if (holdPointTransform != null)
+        {
+            audioSource = holdPointTransform.GetComponent<AudioSource>(); // Get the AudioSource from HoldPoint
+        }
+        else
+        {
+            Debug.LogWarning("HoldPoint object not found in the scene!");
+        }
     }
 
     public void Grab(Transform objectGrabPointTransform)
@@ -44,6 +61,12 @@ public class GrabObject : MonoBehaviour
         Physics.IgnoreLayerCollision(pickedUpLayer, wallLayer, false); // Ensure collision with walls remains
 
         lastPosition = transform.position; // Initialize last position for velocity tracking
+
+        // Play the grab sound from the HoldPoint's AudioSource if it exists
+        if (audioSource != null)
+        {
+            audioSource.Play();
+        }
     }
 
     public void Drop()

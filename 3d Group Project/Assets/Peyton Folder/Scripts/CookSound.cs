@@ -3,13 +3,15 @@ using UnityEngine;
 public class PlaySoundOnCollision3D : MonoBehaviour
 {
     public AudioSource audioSource;
+    private int collisionCount = 0; // Track number of active collisions
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Check if the collided object has the tag "Food" or "Burnt"
         if (collision.gameObject.CompareTag("Food") || collision.gameObject.CompareTag("Burnt") || collision.gameObject.CompareTag("Cuttable"))
         {
             Debug.Log("Collision with: " + collision.gameObject.name); // Debugging
+            collisionCount++; // Increase collision count
+
             if (!audioSource.isPlaying)
             {
                 audioSource.Play();
@@ -19,10 +21,16 @@ public class PlaySoundOnCollision3D : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        // Stop sound only if exiting a "Food" or "Burnt" object
         if (collision.gameObject.CompareTag("Food") || collision.gameObject.CompareTag("Burnt") || collision.gameObject.CompareTag("Cuttable"))
         {
-            audioSource.Stop();
+            collisionCount--; // Decrease collision count
+
+            // Only stop if no objects remain
+            if (collisionCount <= 0)
+            {
+                audioSource.Stop();
+                collisionCount = 0; // Ensure it doesn’t go negative
+            }
         }
     }
 }
