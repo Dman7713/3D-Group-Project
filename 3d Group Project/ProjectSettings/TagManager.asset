@@ -16,6 +16,7 @@ TagManager:
   - Food
   - fireextinguisher
   - Cuttable
+  - NPC
   layers:
   - Default
   - TransparentFX
