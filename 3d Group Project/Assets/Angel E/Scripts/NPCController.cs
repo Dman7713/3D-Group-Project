@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using JetBrains.Annotations;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -13,6 +14,9 @@ public class ObjectList
 
 public class NPCController : MonoBehaviour
 {
+    private Animator animator;
+    private Rigidbody rb;
+
     private NavMeshAgent agent;
     private Transform exitPoint;
     private TaskLocation targetTask;
@@ -23,6 +27,8 @@ public class NPCController : MonoBehaviour
     [SerializeField] private float returnThreshold = 2.5f;
     [SerializeField] private float returnCheckInterval = 1.5f;
     [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float customStopDistance = 1.0f; // Custom stopping distance
+    [SerializeField] private float extraCustomStopDistance = 5.0f; // Custom stopping distance
 
     [SerializeField] private string plateObj;
 
@@ -35,7 +41,6 @@ public class NPCController : MonoBehaviour
     public bool isSatisfied { get; private set; } = false; // True when all expected objects are inside
     public int totalScore { get; private set; } = 0; // Keeps track of cumulative score
 
-
     [System.Serializable]
     public class TaskLocation
     {
@@ -45,6 +50,19 @@ public class NPCController : MonoBehaviour
 
     public void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
+        if (agent == null)
+        {
+            agent = gameObject.AddComponent<NavMeshAgent>();
+        }
+
+        if (!NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 2f, NavMesh.AllAreas))
+        {
+            Debug.LogError("NPC not placed on NavMesh at the start! Adjusting position.");
+            transform.position = hit.position;
+        }
+        agent.Warp(transform.position);
+
         BoxCollider boxCheck = GetComponent<BoxCollider>();
         boxCheck.enabled = false;
 
@@ -60,33 +78,42 @@ public class NPCController : MonoBehaviour
         {
             Debug.LogWarning("No lists available! Ensure possibleLists has entries.");
         }
+        animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
+    }
+
+    public void Update()
+    {
+        // Get the velocity of the Rigidbody and calculate the speed
+        float speed = rb.linearVelocity.magnitude;
+        Debug.Log(speed);
+        // Set the speed parameter in the Animator to control animations
+        animator.SetFloat("speed", speed);
+
     }
 
     public void InitializeNPC(List<TaskLocation> taskLocations, Transform exit)
     {
-        agent = GetComponent<NavMeshAgent>();
         exitPoint = exit;
-
-        // Ensure the agent is enabled
+        agent = GetComponent<NavMeshAgent>();
         if (!agent.enabled)
         {
             agent.enabled = true;
         }
 
-        // Make sure the agent is placed on the NavMesh
-        if (!NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 1f, NavMesh.AllAreas))
+        if (!NavMesh.SamplePosition(transform.position, out NavMeshHit hit, 2f, NavMesh.AllAreas))
         {
-            Debug.LogError("NPC not placed on NavMesh at the start!");
-            return;
+            Debug.LogError("NPC not placed on NavMesh at the start! Adjusting position.");
+            transform.position = hit.position;
         }
-        agent.Warp(hit.position); // Ensure the NPC is placed on a valid position on the NavMesh
+        agent.Warp(hit.position);
 
-        // Select a task location
         targetTask = GetAvailableLocation(taskLocations);
         if (targetTask != null)
         {
             occupiedLocations.Add(targetTask.location);
             agent.SetDestination(targetTask.location.position);
+            StartCoroutine(CheckArrivalAtTarget());
             StartCoroutine(CheckDisplacement());
         }
         else
@@ -96,26 +123,34 @@ public class NPCController : MonoBehaviour
         }
     }
 
-    private void Update()
+    private IEnumerator CheckArrivalAtTarget()
     {
-        if (!taskStarted && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+        while (!taskStarted)
         {
-            taskStarted = true;
-            agent.isStopped = true;
+            yield return new WaitForSeconds(0.2f);
 
-            if (targetTask.lookAtTarget != null)
+            float distanceToTarget = Vector3.Distance(transform.position, targetTask.location.position);
+
+            if (distanceToTarget <= customStopDistance)
             {
-                StartCoroutine(TurnToTarget(targetTask.lookAtTarget));
-            }
+                BoxCollider boxCheck = GetComponent<BoxCollider>();
+                boxCheck.enabled = true;
+                agent.isStopped = true;
+                taskStarted = true;
 
-            StartCoroutine(CompleteTaskAndMoveToExit());
+                if (targetTask.lookAtTarget != null)
+                {
+                    StartCoroutine(TurnToTarget(targetTask.lookAtTarget));
+                }
+
+                StartCoroutine(CompleteTaskAndMoveToExit());
+                break;
+            }
         }
     }
 
     private IEnumerator TurnToTarget(Transform lookAtTarget)
     {
-        Debug.Log("NPC turning to face: " + lookAtTarget.name);
-
         while (true)
         {
             Vector3 direction = (lookAtTarget.position - transform.position).normalized;
@@ -125,7 +160,6 @@ public class NPCController : MonoBehaviour
 
             if (Quaternion.Angle(transform.rotation, lookRotation) < 1f)
             {
-                Debug.Log("NPC finished turning to " + lookAtTarget.name);
                 break;
             }
             yield return null;
@@ -138,13 +172,13 @@ public class NPCController : MonoBehaviour
         {
             yield return new WaitForSeconds(returnCheckInterval);
 
-            if (!movingToExit && targetTask != null && Vector3.Distance(transform.position, targetTask.location.position) > returnThreshold)
+            float distanceToTarget = Vector3.Distance(transform.position, targetTask.location.position);
+            if (!movingToExit && targetTask != null && distanceToTarget > returnThreshold)
             {
                 if (!agent.enabled)
                 {
                     agent.enabled = true;
                 }
-                Debug.Log("NPC was moved! Returning to task location.");
                 agent.SetDestination(targetTask.location.position);
             }
         }
@@ -171,8 +205,6 @@ public class NPCController : MonoBehaviour
 
     private IEnumerator CompleteTaskAndMoveToExit()
     {
-        BoxCollider boxCheck = GetComponent<BoxCollider>();
-        boxCheck.enabled = true;
         float timeRemaining = despawnTime;
         Debug.Log("NPC at " + targetTask.location.name + ". Starting task.");
 
@@ -182,7 +214,7 @@ public class NPCController : MonoBehaviour
             timeRemaining -= 1f;
         }
 
-        if (isSatisfied == true)
+        if (isSatisfied)
         {
             Debug.Log("NPC finished task. Moving to exit.");
         }
@@ -190,25 +222,47 @@ public class NPCController : MonoBehaviour
         {
             Debug.Log("NPC timeout. Moving to exit.");
         }
+        BoxCollider boxCheck = GetComponent<BoxCollider>();
         boxCheck.enabled = false;
         occupiedLocations.Remove(targetTask.location);
         movingToExit = true;
         agent.isStopped = false;
         agent.SetDestination(exitPoint.position);
-
-        while (agent.pathPending || agent.remainingDistance > agent.stoppingDistance)
-        {
-            yield return null;
-        }
-
-        Debug.Log("NPC reached exit. Despawning.");
-        Destroy(gameObject);
+        StartCoroutine(CheckArrivalAtExit());
     }
 
+    
+    private IEnumerator CheckArrivalAtExit()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.2f);
+
+            float distanceToExit = Vector3.Distance(transform.position, exitPoint.position);
+
+            if (distanceToExit <= extraCustomStopDistance)
+            {
+                Debug.Log("NPC reached exit. Despawning.");
+                Destroy(gameObject);
+                break;
+            }
+        }
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
         string objectName = other.gameObject.name;
         bool matched = false;
+        if (other.gameObject.name == plateObj)
+        {
+            GameObject brokePlate = other.gameObject;
+
+            if (brokePlate != null && matched)
+            {
+                Destroy(brokePlate);
+                Debug.Log("🛠️ 'Broke Plate' has been destroyed.");
+            }
+        }
 
         foreach (string expectedName in activeList)
         {
@@ -309,6 +363,8 @@ public class NPCController : MonoBehaviour
         }
     }
 
+
+
     private void DestroyObjects()
     {
         // Destroy only objects that were inside the trigger
@@ -318,14 +374,6 @@ public class NPCController : MonoBehaviour
         }
 
         objectsInTrigger.Clear();
-
-        // Find and destroy "Broke Plate" if it exists
-        GameObject brokePlate = GameObject.Find("Broke Plate");
-        if (brokePlate != null)
-        {
-            Destroy(brokePlate);
-            Debug.Log("🛠️ 'Broke Plate' has been destroyed.");
-        }
     }
 
     private bool NameMatches(string objectName, string expectedName)
@@ -334,8 +382,6 @@ public class NPCController : MonoBehaviour
         return Regex.IsMatch(objectName, pattern);
     }
 }
-
-
 // B.Bun = 1
 // C.Patty = 1
 // Cheese = 1
