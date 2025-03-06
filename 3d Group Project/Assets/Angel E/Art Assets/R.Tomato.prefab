@@ -140,7 +140,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
 --- !u!114 &4890950028532176383
@@ -162,7 +162,6 @@ MonoBehaviour:
   spawnCount: 4
   cutCount: 4
   scaleDecrease: {x: 2, y: 2, z: 2}
-  cutSound: {fileID: 8300000, guid: 40d447c22467149459461e5c8e918c56, type: 3}
 --- !u!114 &5448421402802300756
 MonoBehaviour:
   m_ObjectHideFlags: 0

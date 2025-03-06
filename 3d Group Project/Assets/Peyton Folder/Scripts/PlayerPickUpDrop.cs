@@ -15,15 +15,32 @@ public class PlayerPickAndDrop : MonoBehaviour
             if (grabbedObject == null)
             {
                 float pickUpDistance = 2f;
-                if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out RaycastHit raycastHit, pickUpDistance, pickUpLayerMask))
+                if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out RaycastHit hit, pickUpDistance))
                 {
-                    if (raycastHit.transform.TryGetComponent(out GrabObject objectToGrab))
+                    // Check if the first object hit is on the pickUpLayerMask
+                    if ((pickUpLayerMask & (1 << hit.collider.gameObject.layer)) != 0)
                     {
-                        grabbedObject = objectToGrab;
-                        grabbedObject.Grab(objectGrabPointTransform);
+                        if (hit.transform.TryGetComponent(out GrabObject objectToGrab))
+                        {
+                            // Ensure there's no object blocking the item
+                            if (Physics.Raycast(playerCameraTransform.position, playerCameraTransform.forward, out RaycastHit blockHit, pickUpDistance, pickUpLayerMask))
+                            {
+                                // If we hit something that's not the object we're grabbing, block the grab
+                                if (blockHit.transform != hit.transform)
+                                {
+                                    return; // Block the pick up
+                                }
+                            }
 
-                        // Align object to face the player when it's grabbed
-                        AlignObjectToPlayer(grabbedObject.transform);
+                            grabbedObject = objectToGrab;
+                            grabbedObject.Grab(objectGrabPointTransform);
+
+                            // Move object to the hold position
+                            grabbedObject.transform.position = objectGrabPointTransform.position;
+
+                            // Align object to face the player when it's grabbed
+                            AlignObjectToPlayer(grabbedObject.transform);
+                        }
                     }
                 }
             }

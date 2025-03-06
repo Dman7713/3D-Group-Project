@@ -80,8 +80,21 @@ public class GrabObject : MonoBehaviour
         Physics.IgnoreLayerCollision(pickedUpLayer, playerLayer, false);
         Physics.IgnoreLayerCollision(pickedUpLayer, grabPointLayer, false);
 
-        // Apply stored velocity from swinging motion but dampened for balance
-        objectRigidBody.linearVelocity = objectVelocity * 0.75f; // Apply reduced velocity for a natural throw effect
+        // Check if the object is currently visible
+        if (IsObjectVisible())
+        {
+            // Apply stored velocity from swinging motion but dampened for balance
+            objectRigidBody.linearVelocity = objectVelocity * 0.75f; // Apply reduced velocity for a natural throw effect
+        }
+        else
+        {
+            // Drop the object at the wall (or at a nearby position)
+            Vector3 dropPosition = FindWallDropPosition();
+            transform.position = dropPosition;
+
+            // Reset velocity to ensure no motion when dropped at the wall
+            objectRigidBody.linearVelocity = Vector3.zero;
+        }
     }
 
     private void FixedUpdate()
@@ -97,5 +110,29 @@ public class GrabObject : MonoBehaviour
             objectVelocity = (transform.position - lastPosition) / Time.fixedDeltaTime;
             lastPosition = transform.position;
         }
+    }
+
+    // Method to check if the object is visible (seen by the camera)
+    private bool IsObjectVisible()
+    {
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+        Collider objectCollider = GetComponent<Collider>();
+
+        return GeometryUtility.TestPlanesAABB(planes, objectCollider.bounds);
+    }
+
+    // Method to find the nearest wall or drop position near the wall
+    private Vector3 FindWallDropPosition()
+    {
+        RaycastHit hit;
+        Vector3 rayOrigin = transform.position + Vector3.up * 0.5f; // Starting the ray from above the object to avoid hitting it directly
+        if (Physics.Raycast(rayOrigin, Vector3.down, out hit, 10f, 1 << wallLayer)) // Cast ray downwards to detect the wall
+        {
+            // Return a position slightly offset from the wall's hit point
+            return hit.point + hit.normal * 0.5f; // Adjust the position to drop it near the wall
+        }
+
+        // If no wall is found, return the original position or a default position
+        return transform.position;
     }
 }
