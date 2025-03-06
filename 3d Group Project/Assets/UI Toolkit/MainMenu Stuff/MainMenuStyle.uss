@@ -1,0 +1,21 @@
+.header {
+    font-size: 100px;
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/Cheflat.ttf?fileID=12800000&guid=b238d4f9113f8f24ba83f1bfbbe07b4f&type=3#Cheflat");
+    -unity-text-align: upper-center;
+}
+
+.button {
+    font-size: 20px;
+    width: 220px;
+    height: 60px;
+    align-self: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    -unity-text-align: upper-left;
+    background-image: url("project://database/Assets/Simple%20Buttons/Big%20Buttons/BigGray.png?fileID=21300000&guid=72c72df40bd317b44ab2c02d03f268c7&type=3#BigGray");
+    -unity-font-definition: url("project://database/Assets/UI%20Toolkit/Cheflat.ttf?fileID=12800000&guid=b238d4f9113f8f24ba83f1bfbbe07b4f&type=3#Cheflat");
+    color: rgb(255, 255, 255);
+}
