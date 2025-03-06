@@ -17,6 +17,7 @@ TagManager:
   - fireextinguisher
   - Cuttable
   - NPC
+  - FireExtinguisher
   layers:
   - Default
   - TransparentFX
