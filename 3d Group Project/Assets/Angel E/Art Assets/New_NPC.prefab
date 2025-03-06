@@ -2441,8 +2441,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 8.242323, y: 11.648216, z: 19.467615}
-  m_Center: {x: 0.0055295443, y: 19.657871, z: 9.7528715}
+  m_Size: {x: 16.17, y: 11.648216, z: 27.018902}
+  m_Center: {x: 0.0055295443, y: 19.657871, z: 13.528514}
 --- !u!114 &8675570669707336275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2459,16 +2459,18 @@ MonoBehaviour:
   returnThreshold: 2.5
   returnCheckInterval: 1.5
   rotationSpeed: 5
-  plateObj: Broke Plate
+  customStopDistance: 1
+  extraCustomStopDistance: 5
+  plateObj: Plate
   possibleLists:
   - objects:
-    - B.Bun
-    - C.Patty
-    - Cheese
-    - C.Tomato
-    - C.Lettuce
-    - T.Bun
-    pointValue: 6
+    - B.Bun(Clone)
+    - C.Patty(Clone)
+    - Cheese(Clone)
+    - C.Tomato(Clone)
+    - C.Lettuce(Clone)
+    - T.Bun(Clone)
+    pointValue: 20
 --- !u!195 &8851552325370328264
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2478,7 +2480,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 9160290785344997874}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 4
+  m_Radius: 2
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
