@@ -359,7 +359,7 @@ public class NPCController : MonoBehaviour
         {
             MoneyCounter.Instance.AddScore(activePointValue);
             Debug.Log($"✅ Check Complete! Awarded {activePointValue} points.");
-            DestroyObjects();
+            DestroyObjects(); // Destroy objects inside the trigger
         }
     }
 

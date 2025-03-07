@@ -135,4 +135,21 @@ public class GrabObject : MonoBehaviour
         // If no wall is found, return the original position or a default position
         return transform.position;
     }
+
+    // Trigger methods to detect if the object enters or exits a trigger area
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Pickupable")) // Replace "Pickupable" with the tag of your objects
+        {
+            Grab(other.transform);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Pickupable"))
+        {
+            Drop();
+        }
+    }
 }
