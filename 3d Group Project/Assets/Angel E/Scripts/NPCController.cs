@@ -30,7 +30,7 @@ public class NPCController : MonoBehaviour
     [SerializeField] private float customStopDistance = 1.0f; // Custom stopping distance
     [SerializeField] private float extraCustomStopDistance = 5.0f; // Custom stopping distance
 
-    [SerializeField] private string plateObj;
+    //[SerializeField] private string plateObj;
 
     private static HashSet<Transform> occupiedLocations = new HashSet<Transform>();
 
@@ -253,6 +253,7 @@ public class NPCController : MonoBehaviour
     {
         string objectName = other.gameObject.name;
         bool matched = false;
+        /*
         if (other.gameObject.name == plateObj)
         {
             GameObject brokePlate = other.gameObject;
@@ -263,7 +264,7 @@ public class NPCController : MonoBehaviour
                 Debug.Log("🛠️ 'Broke Plate' has been destroyed.");
             }
         }
-
+        */
         foreach (string expectedName in activeList)
         {
             bool doesMatch = NameMatches(objectName, expectedName);

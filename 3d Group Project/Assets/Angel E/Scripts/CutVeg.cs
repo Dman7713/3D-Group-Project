@@ -1,20 +1,14 @@
 using UnityEngine;
 
-public class CutBurgerBun : MonoBehaviour
+public class CutVeg : MonoBehaviour
 {
     [SerializeField]
-    GameObject topBunPrefab;  // The top half of the bun
+    GameObject cutV;
     [SerializeField]
-    GameObject bottomBunPrefab; // The bottom half of the bun
-
-    [SerializeField]
-    GameObject burntTopBunPrefab;  // The burnt top half of the bun
-    [SerializeField]
-    GameObject burntBottomBunPrefab; // The burnt bottom half of the bun
-
+    GameObject burntV; // Variable for the burnt version of the object
     Vector3 spawnPos;
     [SerializeField]
-    Vector3 spawnDiff;  // Used to slightly offset the spawn position for the two pieces
+    Vector3 spawnDiff;
     Quaternion spawnRot;
     [SerializeField]
     Vector3 spawnScale;
@@ -26,14 +20,12 @@ public class CutBurgerBun : MonoBehaviour
     Vector3 scaleDecrease;
 
     private AudioSource knifeAudioSource; // AudioSource for the cutting sound on the knife
-    [SerializeField]
-    AudioClip cutSound; // Audio clip for the cut sound
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        cutV.transform.localScale = spawnScale;
         spawnRot = Quaternion.identity;
-        transform.localScale = spawnScale; // Make sure the bun starts with the correct scale
     }
 
     // Update is called once per frame
@@ -45,52 +37,48 @@ public class CutBurgerBun : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // Check if the object collides with the knife
-        if (collision.collider.CompareTag("Knife"))
+        if (collision.collider.tag == "Knife")
         {
             // Get the AudioSource from the Knife object that collided with this item
             knifeAudioSource = collision.collider.GetComponent<AudioSource>();
 
             // If the Knife object has an AudioSource component, play the sound
-            if (knifeAudioSource != null && cutSound != null)
+            if (knifeAudioSource != null)
             {
-                knifeAudioSource.PlayOneShot(cutSound); // Play the cut sound from the knife
+                knifeAudioSource.Play();
             }
 
             cutCount -= 1;
             transform.localScale -= scaleDecrease;
 
-            // Check if the object is tagged as "Burnt"
+            // Check if the object has the "burnt" tag
             if (CompareTag("Burnt"))
             {
-                // Spawn the burnt versions of the top and bottom buns
+                // Spawn the burnt version of the object
                 if (spawnCount <= 1)
                 {
-                    Instantiate(burntTopBunPrefab, spawnPos, spawnRot); // Spawn burnt top bun piece
-                    Instantiate(burntBottomBunPrefab, spawnPos + spawnDiff, spawnRot); // Spawn burnt bottom bun piece
+                    Instantiate(burntV, spawnPos, spawnRot); // Spawn burnt object
                     Destroy(gameObject);
                 }
                 else
                 {
-                    Instantiate(burntTopBunPrefab, spawnPos + spawnDiff, spawnRot); // Spawn burnt top bun piece at offset
-                    Instantiate(burntBottomBunPrefab, spawnPos + spawnDiff * 2, spawnRot); // Spawn burnt bottom bun piece at different offset
+                    Instantiate(burntV, spawnPos + spawnDiff, spawnRot); // Spawn burnt object in a different position
                     spawnCount -= 1;
                 }
             }
             else
             {
-                // Regular cut behavior for non-"burnt" objects
+                // Original cut behavior for objects without the "burnt" tag
                 if (cutCount >= 0)
                 {
                     if (spawnCount <= 1)
                     {
-                        Instantiate(topBunPrefab, spawnPos, spawnRot); // Spawn top bun piece
-                        Instantiate(bottomBunPrefab, spawnPos + spawnDiff, spawnRot); // Spawn bottom bun piece
+                        Instantiate(cutV, spawnPos, spawnRot);
                         Destroy(gameObject);
                     }
                     else
                     {
-                        Instantiate(topBunPrefab, spawnPos + spawnDiff, spawnRot); // Spawn top bun piece at offset
-                        Instantiate(bottomBunPrefab, spawnPos + spawnDiff * 2, spawnRot); // Spawn bottom bun piece at different offset
+                        Instantiate(cutV, spawnPos + spawnDiff, spawnRot);
                         spawnCount -= 1;
                     }
                 }
