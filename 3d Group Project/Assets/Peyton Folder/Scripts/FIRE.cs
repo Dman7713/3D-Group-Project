@@ -105,6 +105,18 @@ public class FIRE : MonoBehaviour
             fireExtinguisherUsed = true;
             StopCookingAndParticles();
         }
+        else
+        {
+            // Check if the other object has a ParticleSystem and it's not playing
+            ParticleSystem otherParticleSystem = other.gameObject.GetComponent<ParticleSystem>();
+
+            if (otherParticleSystem != null && !otherParticleSystem.isPlaying)
+            {
+                // Play the particle system if it's not already playing
+                otherParticleSystem.Play();
+                Debug.Log($"Particles triggered on {other.gameObject.name}");
+            }
+        }
     }
 
     private void OnCollisionExit(Collision other)

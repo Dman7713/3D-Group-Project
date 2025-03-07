@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CutBurgerBun : MonoBehaviour
+public class BunCutting : MonoBehaviour
 {
     [SerializeField]
     GameObject topBunPrefab;  // The top half of the bun
